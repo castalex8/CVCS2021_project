@@ -2,7 +2,7 @@ import torch
 import numpy as np
 from pycocotools.coco import COCO
 import skimage.io as io
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 import matplotlib.pyplot as plt
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
@@ -11,6 +11,11 @@ import os
 
 WEIGHT_PATH = os.getenv("WEIGHT_PATH")
 ANNOTATION_FILE = os.getenv("ANNOTATION_FILE")
+
+SCORE_THRESHOLD = 0.8
+FONT_SIZE = 100
+FOCAL_LENGTH = 35
+OBJECT_HEIGHT = 1700
 
 
 def get_model(num_classes):
@@ -40,15 +45,19 @@ with torch.no_grad():
 
 print(prediction)
 boxes = prediction[0]['boxes']
+scores = prediction[0]['scores']
 
 plt.axis('off')
 plt.imshow(Ipil)
 plt.show()
 
-for box in boxes:
+for i, box in enumerate(boxes):
     print(box)
-    draw.rectangle(((box[0], box[1]), (box[2], box[3])), outline="red", width=5)
-
+    if scores[i] > SCORE_THRESHOLD:
+        fnt = ImageFont.truetype(size=FONT_SIZE)
+        draw.rectangle(((box[0], box[1]), (box[2], box[3])), outline="red", width=5)
+        distance = (FOCAL_LENGTH * OBJECT_HEIGHT) / (box[3] - box[1])
+        draw.text((box[0], box[1]), f"distance: {( distance / 10)}", font=fnt)
 plt.axis('off')
 plt.imshow(Ipil)
 plt.show()
