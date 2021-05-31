@@ -11,7 +11,7 @@ class Classifier(nn.Module):
             nn.ReLU(),
             nn.Linear(15, 15),
             nn.ReLU(),
-            nn.LayerNorm(15, 2)
+            nn.Linear(15, 2)
         )
         # regression layers (for bounding boxes)
         self.regression = nn.Sequential(
@@ -19,7 +19,7 @@ class Classifier(nn.Module):
             nn.ReLU(),
             nn.Linear(15, 15),
             nn.ReLU(),
-            nn.LayerNorm(15, num_classes * 4)
+            nn.Linear(15, num_classes * 4)
         )
 
     def forward(self, x):
