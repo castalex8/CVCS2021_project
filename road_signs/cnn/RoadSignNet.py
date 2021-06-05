@@ -1,8 +1,11 @@
+import torch
 from torch.nn import Linear, ReLU, Sequential, Conv2d, MaxPool2d, Module, Softmax, BatchNorm2d, Dropout, Flatten
+import torch.nn as nn
+import torch.nn.functional as F
 
 
 class RoadSignNet(Module):
-    def __init__(self, depth, classes):
+    def __init__(self, depth=3, classes=43):
         super(RoadSignNet, self).__init__()
         kernel_size = (3, 3)
 

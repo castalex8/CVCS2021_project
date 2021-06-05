@@ -1,4 +1,3 @@
-# set the matplotlib backend so figures can be saved in the background
 import torch
 from torch.nn import CrossEntropyLoss
 from torch.optim import Adam
@@ -18,7 +17,7 @@ DATASET = 'gtsrb-german-traffic-sign'
 
 if __name__ == '__main__':
     # load the label names
-    labelNames = open("signnames.csv").read().strip().split("\n")[1:]
+    labelNames = open("gtsrb-german-traffic-sign/signnames.csv").read().strip().split("\n")[1:]
     labelNames = [l.split(",")[1] for l in labelNames]
 
     # derive the path to the training and testing CSV files
