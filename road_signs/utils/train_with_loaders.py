@@ -3,6 +3,7 @@ import torch
 
 def train_with_dataloader(model, epochs, optimizer, criterion, train_loader):
     for epoch in range(epochs):
+        print(f"Epoch {epoch + 1}\n-------------------------------")
         running_loss = 0.0
         for i, data in enumerate(train_loader, 0):
             inputs, labels = data
@@ -18,9 +19,8 @@ def train_with_dataloader(model, epochs, optimizer, criterion, train_loader):
 
             # print statistics
             running_loss += loss.item()
-            if i % 2000 == 1999:  # print every 2000 mini-batches
-                print('[%d, %5d] loss: %.3f' %
-                      (epoch + 1, i + 1, running_loss / 2000))
+            if i % 500 == 1999:  # print every 2000 mini-batches
+                print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss / 2000))
                 running_loss = 0.0
 
     print('Finished Training')
@@ -37,6 +37,7 @@ def test_with_dataloader(model, classes, test_loader):
             images, labels = data
             outputs = model(images)
             _, predictions = torch.max(outputs, 1)
+
             # collect the correct predictions for each class
             for label, prediction in zip(labels, predictions):
                 if label == prediction:

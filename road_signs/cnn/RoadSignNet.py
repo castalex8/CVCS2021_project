@@ -1,7 +1,4 @@
-import torch
 from torch.nn import Linear, ReLU, Sequential, Conv2d, MaxPool2d, Module, Softmax, BatchNorm2d, Dropout, Flatten
-import torch.nn as nn
-import torch.nn.functional as F
 
 
 class RoadSignNet(Module):
@@ -60,7 +57,7 @@ class RoadSignNet(Module):
         self.linear_layers = Sequential(
             # first set of FC => RELU layers
             # Flatten(),
-            Linear(8192, 128),
+            Linear(2048, 128),
             ReLU(),
             # BatchNorm2d(1),
             # Dropout(0.5),
@@ -74,7 +71,7 @@ class RoadSignNet(Module):
 
             # softmax classifier
             Linear(128, classes),
-            Softmax()
+            Softmax(dim=1)
         )
 
     # Defining the forward pass

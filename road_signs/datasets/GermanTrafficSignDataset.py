@@ -1,26 +1,14 @@
 import os
-
-import torch
 from skimage import io, exposure, transform
 from torch.utils.data import Dataset
 from torchvision import transforms as trans
-from torchvision.io import read_image
 import pandas as pd
 import numpy as np
-import torch.nn.functional as F
-
-
-# t = transforms.Compose([
-#     # transforms.Resize((32, 32)),
-#     # transforms.ToTensor()
-#     # transforms.functional.equalize,
-# ])
 
 
 t = trans.Compose([
     trans.ToTensor(),
-    # trans.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-    # trans.ConvertImageDtype(torch.double)
+    # trans.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
 
 
@@ -30,7 +18,7 @@ BASE_DIR = 'gtsrb-german-traffic-sign'
 class GermanTrafficSignDataset(Dataset):
     def __init__(self, train=True, transform=t):
         self.base_dir = BASE_DIR
-        self.img_labels = pd.read_csv(os.path.join(self.base_dir, 'Train.csv' if train else 'Test.csv'))[:5000]
+        self.img_labels = pd.read_csv(os.path.join(self.base_dir, 'Train.csv' if train else 'Test.csv'))# [:1000]
         self.transform = transform
 
     def __len__(self):
@@ -39,17 +27,15 @@ class GermanTrafficSignDataset(Dataset):
     def __getitem__(self, index):
         item = self.img_labels.iloc[index]
         img_path = os.path.join(self.base_dir, item.Path)
-        # image = read_image(img_path)
         image = io.imread(img_path)
         image = transform.resize(image, (32, 32))
         image = exposure.equalize_adapthist(image, clip_limit=0.1)
         image.astype(np.double)
         label = item.ClassId
 
-        # return image, label
         return self.transform(image), label
 
 
 def get_classes():
-    classes = os.path.join(BASE_DIR, 'signnames.csv')
+    classes = pd.read_csv(os.path.join(BASE_DIR, 'signnames.csv')).SignName
     return [c for c in classes]
