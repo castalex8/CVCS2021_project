@@ -2,9 +2,10 @@ from torch.nn import Linear, ReLU, Sequential, Conv2d, MaxPool2d, Module, Softma
 
 
 class RoadSignNet(Module):
-    def __init__(self, depth=3, classes=43):
+    def __init__(self, depth=3, classes=43, is_retrieval=False):
         super(RoadSignNet, self).__init__()
         kernel_size = (3, 3)
+        classes = 2 if is_retrieval else classes
 
         self.cnn_layers = Sequential(
             # First set of (CONV => RELU => CONV => RELU) * 2 => POOL
@@ -57,7 +58,7 @@ class RoadSignNet(Module):
         self.linear_layers = Sequential(
             # first set of FC => RELU layers
             # Flatten(),
-            Linear(2048, 128),
+            Linear(2048, 256),
             ReLU(),
             # BatchNorm2d(1),
             # Dropout(0.5),
@@ -65,13 +66,13 @@ class RoadSignNet(Module):
 
             # second set of FC => RELU layers
             # Flatten(),
-            Linear(128, 128),
+            Linear(256, 256),
             ReLU(),
             # BatchNorm2d(1),
             # Dropout(0.5),
 
             # softmax classifier
-            Linear(128, classes),
+            Linear(256, 2),
 
             # Remove softmax due to low performance
             # Softmax(dim=1)

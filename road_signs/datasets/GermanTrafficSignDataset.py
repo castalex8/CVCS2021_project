@@ -1,25 +1,12 @@
 import os
 from skimage import io, exposure, transform
-from torch.utils.data import Dataset
-from torchvision import transforms as trans
-import pandas as pd
 import numpy as np
+from road_signs.datasets.GermanTrafficSignDatasetAbs import GermanTrafficSignDatasetAbs
 
 
-t = trans.Compose([
-    trans.ToTensor(),
-    # trans.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-])
-
-
-BASE_DIR = 'gtsrb-german-traffic-sign'
-
-
-class GermanTrafficSignDataset(Dataset):
-    def __init__(self, train=True, transform=t):
-        self.base_dir = BASE_DIR
-        self.img_labels = pd.read_csv(os.path.join(self.base_dir, 'Train.csv' if train else 'Test.csv'))# [:1000]
-        self.transform = transform
+class GermanTrafficSignDataset(GermanTrafficSignDatasetAbs):
+    def __init__(self, train=True, trans=None):
+        super().__init__(train, trans)
 
     def __len__(self):
         return len(self.img_labels)
@@ -34,8 +21,3 @@ class GermanTrafficSignDataset(Dataset):
         label = item.ClassId
 
         return self.transform(image), label
-
-
-def get_classes():
-    classes = pd.read_csv(os.path.join(BASE_DIR, 'signnames.csv')).SignName
-    return [c for c in classes]

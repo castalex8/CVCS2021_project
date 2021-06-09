@@ -1,9 +1,10 @@
 import torch
 
 
-def train_with_dataloader(model, epochs, optimizer, criterion, train_loader, device):
+def train(model, epochs, optimizer, criterion, train_loader, device):
+    size = len(train_loader.dataset)
     for epoch in range(epochs):
-        print(f"Epoch {epoch + 1}\n-------------------------------")
+        print(f"Epoch {epoch + 1} -------------------------------")
         running_loss = 0.0
         for i, data in enumerate(train_loader, 0):
             inputs, labels = data
@@ -23,13 +24,13 @@ def train_with_dataloader(model, epochs, optimizer, criterion, train_loader, dev
             # print statistics
             running_loss += loss.item()
             if i % 100 == 99:  # print every 2000 mini-batches
-                print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss / 100))
+                print(f"loss: {loss:>7f}  [{i * len(inputs):>5d}/{size:>5d}]")
                 running_loss = 0.0
 
     print('Finished Training')
 
 
-def test_with_dataloader(model, classes, test_loader, device):
+def test(model, classes, test_loader, device):
     # prepare to count predictions for each class
     correct_pred = {classname: 0 for classname in classes}
     total_pred = {classname: 0 for classname in classes}
@@ -55,35 +56,3 @@ def test_with_dataloader(model, classes, test_loader, device):
     for classname, correct_count in correct_pred.items():
         accuracy = 100 * float(correct_count) / total_pred[classname]
         print("Accuracy for class {:5s} is: {:.1f} %".format(classname, accuracy))
-
-
-def train_loop(dataloader, model, loss_fn, optimizer):
-    size = len(dataloader.dataset)
-    for batch, (X, y) in enumerate(dataloader):
-        # Compute prediction and loss
-        pred = model(X)
-        loss = loss_fn(pred, y)
-
-        # Backpropagation
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-        if batch % 100 == 0:
-            loss, current = loss.item(), batch * len(X)
-            print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
-
-
-def test_loop(dataloader, model, loss_fn):
-    size = len(dataloader.dataset)
-    test_loss, correct = 0, 0
-
-    with torch.no_grad():
-        for X, y in dataloader:
-            pred = model(X)
-            test_loss += loss_fn(pred, y).item()
-            correct += (pred.argmax(1) == y).type(torch.float).sum().item()
-
-    test_loss /= size
-    correct /= size
-    print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
