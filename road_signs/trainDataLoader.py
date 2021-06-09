@@ -7,7 +7,7 @@ from road_signs.utils.train_with_loaders import *
 
 
 # initialize the number of epochs to train for, base learning rate, and batch size
-NUM_EPOCHS = 30
+NUM_EPOCHS = 10
 INIT_LR = 1e-3
 MOMENTUM = 0.9
 BS = 64
@@ -30,9 +30,9 @@ if __name__ == '__main__':
     # defining the loss function
     criterion = CrossEntropyLoss()
 
-    train_with_dataloader(model, NUM_EPOCHS, optimizer, criterion, train_loader)
-    torch.save(model.state_dict(), 'weights/weights.pth')
-    test_with_dataloader(model, classes, test_loader)
+    train_with_dataloader(model, NUM_EPOCHS, optimizer, criterion, train_loader, device)
+    torch.save(model.state_dict(), 'weights/weightsNoSoftmax3layers10epochs.pth')
+    test_with_dataloader(model, classes, test_loader, device)
 
     # for t in range(NUM_EPOCHS):
     #     print(f"Epoch {t + 1}\n-------------------------------")
