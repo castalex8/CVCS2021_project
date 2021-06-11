@@ -32,8 +32,8 @@ def train(model, epochs, optimizer, criterion, train_loader, device):
 
 def test(model, classes, test_loader, device):
     # prepare to count predictions for each class
-    correct_pred = {classname: 0 for classname in classes}
-    total_pred = {classname: 0 for classname in classes}
+    correct_val = 0
+    total_val = 0
 
     # again no gradients needed
     with torch.no_grad():
@@ -46,13 +46,4 @@ def test(model, classes, test_loader, device):
             outputs = model(*data)
             _, predictions = torch.max(outputs, 1)
 
-            # collect the correct predictions for each class
-            # for label, prediction in zip(labels, predictions):
-            #     if label == prediction:
-            #         correct_pred[classes[label]] += 1
-            #     total_pred[classes[label]] += 1
-
-    # print accuracy for each class
-    for classname, correct_count in correct_pred.items():
-        accuracy = 100 * float(correct_count) / total_pred[classname]
-        print("Accuracy for class {:5s} is: {:.1f} %".format(classname, accuracy))
+        print('Accuracy of the network on the', total_val, 'val pairs in %d %%' % (100 * correct_val / total_val))

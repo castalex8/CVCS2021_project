@@ -4,7 +4,7 @@ from torch.utils.data import DataLoader
 from road_signs.cnn.RoadSignNet import RoadSignNet
 from road_signs.datasets.GermanTrafficSignDataset import GermanTrafficSignDataset
 from road_signs.datasets.GermanTrafficSignDatasetAbs import get_classes
-from road_signs.train.trainClassificationCNN import *
+from road_signs.train.Classification import *
 
 
 # initialize the number of epochs to train for, base learning rate, and batch size
@@ -32,5 +32,5 @@ if __name__ == '__main__':
     criterion = CrossEntropyLoss()
 
     train(model, NUM_EPOCHS, optimizer, criterion, train_loader, device)
-    torch.save(model.state_dict(), 'ClassificationWeights/weightsNoSoftmax3layers10epochs.pth')
+    torch.save(model.state_dict(), 'weights/ClassificationWeights/weightsNoSoftmax3layers10epochs.pth')
     test(model, classes, test_loader, device)

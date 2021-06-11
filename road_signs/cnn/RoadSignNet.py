@@ -58,7 +58,7 @@ class RoadSignNet(Module):
         self.linear_layers = Sequential(
             # first set of FC => RELU layers
             # Flatten(),
-            Linear(2048, 256),
+            Linear(2048, 128),
             ReLU(),
             # BatchNorm2d(1),
             # Dropout(0.5),
@@ -66,13 +66,13 @@ class RoadSignNet(Module):
 
             # second set of FC => RELU layers
             # Flatten(),
-            Linear(256, 256),
+            Linear(128, 128),
             ReLU(),
             # BatchNorm2d(1),
             # Dropout(0.5),
 
             # softmax classifier
-            Linear(256, 2),
+            Linear(128, 2),
 
             # Remove softmax due to low performance
             # Softmax(dim=1)
