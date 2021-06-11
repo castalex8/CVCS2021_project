@@ -9,7 +9,7 @@ def train(model, epochs, optimizer, criterion, train_loader, device):
 
         for i, data in enumerate(train_loader, 0):
             img0, img1, labels = data
-            if device == 'cuda':
+            if str(device) == 'cuda':
                 img0, img1, labels = img0.cuda(), img1.cuda(), labels.cuda()
 
             # zero the parameter gradients
@@ -38,7 +38,7 @@ def test(model, classes, test_loader, device):
     with torch.no_grad():
         for data in test_loader:
             img0, img1, labels = data
-            if device == 'cuda':
+            if str(device) == 'cuda':
                 img0, img1, labels = img0.cuda(), img1.cuda(), labels.cuda()
 
             outputs = model(img0, img1)

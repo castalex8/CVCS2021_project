@@ -8,7 +8,7 @@ def train(model, epochs, optimizer, criterion, train_loader, device):
         running_loss = 0.0
         for i, data in enumerate(train_loader, 0):
             inputs, labels = data
-            if device == 'cuda':
+            if str(device) == 'cuda':
                 inputs = inputs.cuda()
                 labels = labels.cuda()
 
@@ -39,7 +39,7 @@ def test(model, classes, test_loader, device):
     with torch.no_grad():
         for data in test_loader:
             images, labels = data
-            if device == 'cuda':
+            if str(device) == 'cuda':
                 images = images.cuda()
                 labels = labels.cuda()
 

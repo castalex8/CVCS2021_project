@@ -7,7 +7,7 @@ def train(model, epochs, optimizer, criterion, train_loader, device):
         print(f"Epoch {epoch + 1} -------------------------------")
         running_loss = 0.0
         for i, data in enumerate(train_loader, 0):
-            if device == 'cuda':
+            if str(device) == 'cuda':
                 data = tuple(d.cuda() for d in data)
 
             # zero the parameter gradients
@@ -37,7 +37,7 @@ def test(model, classes, test_loader, device):
     with torch.no_grad():
         for data in test_loader:
             # images, labels = data
-            if device == 'cuda':
+            if str(device) == 'cuda':
                 data = data.cuda()
                 # labels = labels.cuda()
 
