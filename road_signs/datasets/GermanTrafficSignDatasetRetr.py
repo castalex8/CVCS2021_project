@@ -1,6 +1,3 @@
-import os
-import numpy as np
-from skimage import io, transform, exposure
 from road_signs.datasets.GermanTrafficSignDatasetAbs import GermanTrafficSignDatasetAbs, get_classes
 
 

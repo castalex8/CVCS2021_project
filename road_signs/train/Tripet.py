@@ -7,10 +7,8 @@ def train(model, epochs, optimizer, criterion, train_loader, device):
         print(f"Epoch {epoch + 1} -------------------------------")
         running_loss = 0.0
         for i, data in enumerate(train_loader, 0):
-            # inputs, labels = data
             if device == 'cuda':
-                data = data.cuda()
-                # labels = labels.cuda()
+                data = tuple(d.cuda() for d in data)
 
             # zero the parameter gradients
             optimizer.zero_grad()

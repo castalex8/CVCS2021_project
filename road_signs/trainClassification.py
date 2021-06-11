@@ -2,7 +2,7 @@ from torch.nn import CrossEntropyLoss
 from torch.optim import SGD
 from torch.utils.data import DataLoader
 from road_signs.cnn.RoadSignNet import RoadSignNet
-from road_signs.datasets.GermanTrafficSignDataset import GermanTrafficSignDataset
+from road_signs.datasets.GermanTrafficSignDatasetClass import GermanTrafficSignDatasetClass
 from road_signs.datasets.GermanTrafficSignDatasetAbs import get_classes
 from road_signs.train.Classification import *
 
@@ -17,8 +17,8 @@ BS = 64
 if __name__ == '__main__':
     # load the label names
     classes = get_classes()
-    train_loader = DataLoader(GermanTrafficSignDataset(train=True), batch_size=BS, shuffle=True)
-    test_loader = DataLoader(GermanTrafficSignDataset(train=False), batch_size=BS, shuffle=True)
+    train_loader = DataLoader(GermanTrafficSignDatasetClass(train=True), batch_size=BS, shuffle=True)
+    test_loader = DataLoader(GermanTrafficSignDatasetClass(train=False), batch_size=BS, shuffle=True)
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
     # defining the model

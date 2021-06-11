@@ -1,4 +1,4 @@
 __all__ = [
-    'GermanTrafficSignDatasetAbs', 'GermanTrafficSignDatasetTriplet', 'GermanTrafficSignDataset',
+    'GermanTrafficSignDatasetAbs', 'GermanTrafficSignDatasetTriplet', 'GermanTrafficSignDatasetClass',
     'GermanTrafficSignDatasetAbs'
 ]

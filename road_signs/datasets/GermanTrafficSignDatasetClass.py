@@ -2,7 +2,7 @@ import os
 from road_signs.datasets.GermanTrafficSignDatasetAbs import GermanTrafficSignDatasetAbs
 
 
-class GermanTrafficSignDataset(GermanTrafficSignDatasetAbs):
+class GermanTrafficSignDatasetClass(GermanTrafficSignDatasetAbs):
     def __init__(self, train=True, trans=None):
         super().__init__(train, trans)
 
