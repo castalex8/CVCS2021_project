@@ -1,4 +1,5 @@
 import os
+from torch.nn import PairwiseDistance, CosineSimilarity
 from road_signs.loss.CostrastiveLoss import ContrastiveLoss
 from road_signs.train.Siamese import *
 from torch.optim import Adam
@@ -9,11 +10,14 @@ from road_signs.datasets.GermanTrafficSignDatasetSiamese import GermanTrafficSig
 from road_signs.utils.Const import *
 
 
+DISTANCE_FN = CosineSimilarity()
+
+
 if __name__ == '__main__':
     train_loader = DataLoader(GermanTrafficSignDatasetSiamese(train=True, is_local=LOCAL), batch_size=BS, shuffle=True)
     test_loader = DataLoader(GermanTrafficSignDatasetSiamese(train=False, is_local=LOCAL), batch_size=BS, shuffle=True)
 
-    criterion = ContrastiveLoss(MARGIN)
+    criterion = ContrastiveLoss(MARGIN, DISTANCE_FN)
     model = SiameseNet().double()
     optimizer = Adam(model.parameters(), lr=INIT_LR)
     classes = get_classes(is_local=LOCAL)
