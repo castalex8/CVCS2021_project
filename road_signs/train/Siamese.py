@@ -21,7 +21,7 @@ def train_epoch(train_loader, model, loss_fn, optimizer, cuda):
         loss_inputs += target
 
         loss_outputs = loss_fn(*loss_inputs)
-        loss = loss_outputs # [0] if type(loss_outputs) in (tuple, list) else loss_outputs
+        loss = loss_outputs
         losses.append(loss.item())
         total_loss += loss.item()
         loss.backward()
@@ -53,7 +53,7 @@ def test_epoch(val_loader, model, loss_fn, cuda):
             target = (target,)
             loss_inputs += target
             loss_outputs = loss_fn(*loss_inputs)
-            loss = loss_outputs # [0] if type(loss_outputs) in (tuple, list) else loss_outputs
+            loss = loss_outputs
             val_loss += loss.item()
 
     return val_loss

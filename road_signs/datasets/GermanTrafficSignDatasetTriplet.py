@@ -6,7 +6,7 @@ class GermanTrafficSignDatasetTriplet(GermanTrafficSignDatasetRetr):
     def __init__(self, train=True, trans=None, is_local=True):
         super().__init__(train, trans, is_local)
         if not self.train:
-            self.triplets = [[] for i in range(len(self.img_labels))]davide
+            self.triplets = [[] for i in range(len(self.img_labels))]
             for i in range(len(self.img_labels)):
                 class_id = self.img_labels.iloc[i].ClassId
                 self.triplets[i].append(self.img_labels.iloc[i].Path)

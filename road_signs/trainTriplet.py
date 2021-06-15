@@ -13,15 +13,11 @@ if __name__ == '__main__':
     train_loader = DataLoader(GermanTrafficSignDatasetTriplet(train=True, is_local=LOCAL), batch_size=BS, shuffle=True)
     test_loader = DataLoader(GermanTrafficSignDatasetTriplet(train=False, is_local=LOCAL), batch_size=BS, shuffle=True)
 
-    margin = 1.
     model = TripletNet().double()
-    loss_fn = TripletMarginWithDistanceLoss(distance_function=PairwiseDistance(), margin=margin)
-    lr = 1e-3
-    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-    optimizer = optim.Adam(model.parameters(), lr=lr)
+    loss_fn = TripletMarginWithDistanceLoss(distance_function=PairwiseDistance(), margin=MARGIN)
+    cuda = torch.cuda.is_available()
+    optimizer = optim.Adam(model.parameters(), lr=INIT_LR)
     scheduler = lr_scheduler.StepLR(optimizer, 8, gamma=0.1, last_epoch=-1)
-    n_epochs = 10
-    log_interval = 100
 
-    fit(train_loader, test_loader, model, loss_fn, optimizer, scheduler, n_epochs, str(device) == 'cuda', log_interval)
+    fit(train_loader, test_loader, model, loss_fn, optimizer, scheduler, NUM_EPOCHS, cuda, train_epoch, test_epoch)
     torch.save(model.state_dict(), '../weights/TripletWeights/FitTriplet3layer128deep10epochs.pth')
