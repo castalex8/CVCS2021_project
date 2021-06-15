@@ -1,50 +1,59 @@
+import numpy as np
 import torch
 
 
-def train(model, epochs, optimizer, criterion, train_loader, device):
-    size = len(train_loader.dataset)
-    for epoch in range(epochs):
-        print(f"Epoch {epoch + 1} -------------------------------")
-        running_loss = 0.0
+def train_epoch(train_loader, model, loss_fn, optimizer, cuda):
+    model.train()
+    losses = []
+    total_loss = 0
+    batch_idx = 0
 
-        for i, data in enumerate(train_loader, 0):
-            img0, img1, labels = data
-            if str(device) == 'cuda':
-                img0, img1, labels = img0.cuda(), img1.cuda(), labels.cuda()
+    for batch_idx, (data, target) in enumerate(train_loader):
+        if cuda:
+            data = tuple(d.cuda() for d in data)
+            target = target.cuda()
 
-            # zero the parameter gradients
-            optimizer.zero_grad()
-            outputs = model(img0, img1)
+        optimizer.zero_grad()
+        outputs = model(*data)
 
-            loss = criterion(*outputs, labels)
-            loss.backward()
-            optimizer.step()
+        loss_inputs = outputs
+        target = (target,)
+        loss_inputs += target
 
-            # print statistics
-            running_loss += loss.item()
-            if i % 100 == 99:  # print every 2000 mini-batches
-                print(f"loss: {loss:>7f}  [{i * len(data):>5d}/{size:>5d}]")
-                running_loss = 0.0
+        loss_outputs = loss_fn(*loss_inputs)
+        loss = loss_outputs # [0] if type(loss_outputs) in (tuple, list) else loss_outputs
+        losses.append(loss.item())
+        total_loss += loss.item()
+        loss.backward()
+        optimizer.step()
 
-    print('Finished Training')
+        if batch_idx % 100 == 99:
+            print(
+                f'Train: [{batch_idx * len(data[0])}/{len(train_loader.dataset)} '
+                f'({100. * batch_idx / len(train_loader)}%)]\tLoss: {np.mean(losses)}'
+            )
+            losses = []
+
+    total_loss /= (batch_idx + 1)
+    return total_loss
 
 
-def test(model, classes, test_loader, device):
-    # prepare to count predictions for each class
-    correct_val = 0
-    total_val = 0
-
-    # again no gradients needed
+def test_epoch(val_loader, model, loss_fn, cuda):
     with torch.no_grad():
-        for data in test_loader:
-            img0, img1, labels = data
-            if str(device) == 'cuda':
-                img0, img1, labels = img0.cuda(), img1.cuda(), labels.cuda()
+        model.eval()
+        val_loss = 0
+        for batch_idx, (data, target) in enumerate(val_loader):
+            if cuda:
+                data = tuple(d.cuda() for d in data)
+                target = target.cuda()
 
-            outputs = model(img0, img1)
-            _, predicted = torch.max(outputs.data, 1)
-            total_val += labels.size(0)
-            correct_val += (predicted == labels).sum().item()
+            outputs = model(*data)
 
-    print('Accuracy of the network on the', total_val, 'val pairs in %d %%' % (100 * correct_val / total_val))
+            loss_inputs = outputs
+            target = (target,)
+            loss_inputs += target
+            loss_outputs = loss_fn(*loss_inputs)
+            loss = loss_outputs # [0] if type(loss_outputs) in (tuple, list) else loss_outputs
+            val_loss += loss.item()
 
+    return val_loss

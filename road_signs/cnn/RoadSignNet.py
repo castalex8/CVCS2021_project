@@ -65,7 +65,7 @@ class RoadSignNet(Module):
 
 
             # second set of FC => RELU layers
-            # Flatten(),
+            # # Flatten(),
             Linear(128, 128),
             ReLU(),
             # BatchNorm2d(1),

@@ -1,4 +1,4 @@
-NUM_EPOCHS = 20
+NUM_EPOCHS = 10
 INIT_LR = 1e-3
 BS = 128
 LOCAL = True

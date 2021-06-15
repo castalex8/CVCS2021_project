@@ -52,4 +52,4 @@ class GermanTrafficSignDatasetSiamese(GermanTrafficSignDatasetRetr):
         else:
             img1, img2, target = self.pairs[index]
 
-        return self.transform(self.format_image(img1)), self.transform(self.format_image(img2)), target
+        return (self.transform(self.format_image(img1)), self.transform(self.format_image(img2))), target

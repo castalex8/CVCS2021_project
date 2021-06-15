@@ -6,7 +6,7 @@ from torchvision import transforms
 import pandas as pd
 
 
-BASE_DIR_LOCAL = 'gtsrb-german-traffic-sign'
+BASE_DIR_LOCAL = '../gtsrb-german-traffic-sign'
 BASE_DIR_LAB = '/nas/softechict-nas-3/mcorradini/gtsrb-german-traffic-sign'
 t = transforms.Compose([
     transforms.ToTensor(),
