@@ -2,8 +2,8 @@ from road_signs.datasets.GermanTrafficSignDatasetAbs import GermanTrafficSignDat
 
 
 class GermanTrafficSignDatasetRetr(GermanTrafficSignDatasetAbs):
-    def __init__(self, train=True, trans=None, is_local=True):
-        super().__init__(train, trans, is_local)
+    def __init__(self, train=True, trans=None):
+        super().__init__(train, trans)
         self.img_classes = [[] for i in range(len(get_classes()))]
         for val in self.img_labels.values:
             self.img_classes[val[-2]].append(val[-1])

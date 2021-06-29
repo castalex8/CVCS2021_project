@@ -3,8 +3,8 @@ from road_signs.datasets.GermanTrafficSignDatasetRetr import GermanTrafficSignDa
 
 
 class GermanTrafficSignDatasetTriplet(GermanTrafficSignDatasetRetr):
-    def __init__(self, train=True, trans=None, is_local=True):
-        super().__init__(train, trans, is_local)
+    def __init__(self, train=True, trans=None):
+        super().__init__(train, trans)
         if not self.train:
             self.triplets = [[] for i in range(len(self.img_labels))]
             for i in range(len(self.img_labels)):
@@ -46,7 +46,7 @@ class GermanTrafficSignDatasetTriplet(GermanTrafficSignDatasetRetr):
             anchor, positive, negative = self.triplets[index]
 
         return (
-            self.transform(self.format_image(anchor)),
-            self.transform(self.format_image(positive)),
-            self.transform(self.format_image(negative))
+            self.transform(self.read_image(anchor)),
+            self.transform(self.read_image(positive)),
+            self.transform(self.read_image(negative))
         ), []

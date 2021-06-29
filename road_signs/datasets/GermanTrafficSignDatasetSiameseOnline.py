@@ -4,8 +4,8 @@ from road_signs.datasets.GermanTrafficSignDatasetRetr import GermanTrafficSignDa
 
 
 class GermanTrafficSignDatasetSiamese(GermanTrafficSignDatasetRetr):
-    def __init__(self, train=True, transform=None, is_local=True):
-        super().__init__(train, transform, is_local)
+    def __init__(self, train=True, transform=None):
+        super().__init__(train, transform)
         if not self.train:
             positive_pairs = [[] for i in range(len(self.img_labels) // 2)]
             negative_pairs = [[] for i in range(len(self.img_labels) // 2)]
@@ -29,7 +29,7 @@ class GermanTrafficSignDatasetSiamese(GermanTrafficSignDatasetRetr):
                 negative_pairs[i].append(negative)
                 negative_pairs[i].append(0)
 
-            self.pairs = positive_pairs + negative_pairs
+            self.test_pairs = positive_pairs + negative_pairs
 
     def __getitem__(self, index):
         if self.train:
@@ -50,6 +50,6 @@ class GermanTrafficSignDatasetSiamese(GermanTrafficSignDatasetRetr):
 
             img1 = img1.Path
         else:
-            img1, img2, target = self.pairs[index]
+            img1, img2, target = self.test_pairs[index]
 
-        return (self.transform(self.format_image(img1)), self.transform(self.format_image(img2))), target
+        return (self.transform(self.read_image(img1)), self.transform(self.read_image(img2))), target

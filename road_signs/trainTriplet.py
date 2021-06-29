@@ -4,15 +4,15 @@ from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 from torch.nn import TripletMarginWithDistanceLoss, PairwiseDistance
 from road_signs.cnn.TripletNet import TripletNet
-from road_signs.datasets.GermanTrafficSignDatasetTriplet import GermanTrafficSignDatasetTriplet
+from road_signs.datasets.GermanTrafficSignDatasetTripletOnline import GermanTrafficSignDatasetTriplet
 from road_signs.utils.Const import *
 from road_signs.train.Tripet import train_epoch, test_epoch
 from road_signs.train.fit import fit
 
 
 if __name__ == '__main__':
-    train_loader = DataLoader(GermanTrafficSignDatasetTriplet(train=True, is_local=LOCAL), batch_size=BS, shuffle=True)
-    test_loader = DataLoader(GermanTrafficSignDatasetTriplet(train=False, is_local=LOCAL), batch_size=BS, shuffle=True)
+    train_loader = DataLoader(GermanTrafficSignDatasetTriplet(train=True), batch_size=BS, shuffle=True)
+    test_loader = DataLoader(GermanTrafficSignDatasetTriplet(train=False), batch_size=BS, shuffle=True)
 
     model = TripletNet().double()
     loss_fn = TripletMarginWithDistanceLoss(distance_function=PairwiseDistance(), margin=MARGIN)
