@@ -13,21 +13,19 @@ def train_epoch(train_loader, model, loss_fn, optimizer, cuda):
             data = tuple(d.cuda() for d in data)
             target = target.cuda()
 
-        optimizer.zero_grad()
+        # Compute prediction error
         outputs = model(*data)
-
         loss_inputs = outputs
-        target = (target,)
-        loss_inputs += target
-
-        loss_outputs = loss_fn(*loss_inputs)
-        loss = loss_outputs
+        loss = loss_fn(*loss_inputs, target)
         losses.append(loss.item())
         total_loss += loss.item()
+
+        # Backpropagation
+        optimizer.zero_grad()
         loss.backward()
         optimizer.step()
 
-        if batch_idx % 100 == 99:
+        if batch_idx % 100 == 0:
             print(
                 f'Train: [{batch_idx * len(data[0])}/{len(train_loader.dataset)} '
                 f'({100. * batch_idx / len(train_loader)}%)]\tLoss: {np.mean(losses)}'
@@ -48,12 +46,8 @@ def test_epoch(val_loader, model, loss_fn, cuda):
                 target = target.cuda()
 
             outputs = model(*data)
-
             loss_inputs = outputs
-            target = (target,)
-            loss_inputs += target
-            loss_outputs = loss_fn(*loss_inputs)
-            loss = loss_outputs
+            loss = loss_fn(*loss_inputs, target)
             val_loss += loss.item()
 
     return val_loss

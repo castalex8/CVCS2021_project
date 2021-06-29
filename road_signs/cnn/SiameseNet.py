@@ -5,7 +5,7 @@ from road_signs.cnn.RoadSignNet import RoadSignNet
 class SiameseNet(nn.Module):
     def __init__(self):
         super(SiameseNet, self).__init__()
-        self.cnn_net = RoadSignNet()
+        self.cnn_net = RoadSignNet(is_retrieval=True)
 
     def forward(self, x1, x2):
         output1 = self.cnn_net(x1)

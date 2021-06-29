@@ -1,3 +1,4 @@
+import torch
 from torch import optim
 from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
@@ -5,7 +6,7 @@ from torch.nn import TripletMarginWithDistanceLoss, PairwiseDistance
 from road_signs.cnn.TripletNet import TripletNet
 from road_signs.datasets.GermanTrafficSignDatasetTriplet import GermanTrafficSignDatasetTriplet
 from road_signs.utils.Const import *
-from road_signs.train.Tripet import *
+from road_signs.train.Tripet import train_epoch, test_epoch
 from road_signs.train.fit import fit
 
 

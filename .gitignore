@@ -132,3 +132,4 @@ dmypy.json
 road_signs/gtsrb-german-traffic-sign
 road_signs/results
 road_signs/weights
+road_signs/siamese_triplet

@@ -1,3 +1,4 @@
+import torch
 from torch import optim
 from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
@@ -6,7 +7,7 @@ from road_signs.datasets.GermanTrafficSignDatasetSiamese import GermanTrafficSig
 from road_signs.loss.CostrastiveLoss import ContrastiveLoss
 from road_signs.utils.Const import *
 from road_signs.train.fit import fit
-from road_signs.train.Siamese import *
+from road_signs.train.Siamese import train_epoch, test_epoch
 
 
 if __name__ == '__main__':
