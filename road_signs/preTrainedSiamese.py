@@ -35,5 +35,5 @@ if __name__ == '__main__':
     # Decay LR by a factor of 0.1 every 7 epochs
     scheduler = lr_scheduler.StepLR(optim, step_size=7, gamma=0.1)
 
-    fit(train_loader, test_loader, model_conv, loss_fn, optim, scheduler, NUM_EPOCHS, cuda, train_epoch, test_epoch)
+    fit(train_loader, test_loader, model_conv, loss_fn, optim, scheduler, NUM_EPOCHS, cuda, train_epoch, test_epoch, 'pretrained_siamese.txt')
     torch.save(model_conv.state_dict(), 'weights/SiameseWeights/preTrainedFitSiamese3layer256deep.pth')

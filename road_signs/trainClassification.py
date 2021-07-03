@@ -31,6 +31,7 @@ if __name__ == '__main__':
     # defining the loss function
     criterion = CrossEntropyLoss()
 
-    train(model, NUM_EPOCHS, optimizer, criterion, train_loader, device)
-    torch.save(model.state_dict(), 'weights/ClassificationWeights/weightsNoSoftmax3layers10epochs.pth')
-    test(model, classes, test_loader, device)
+    with open('class.txt', 'a') as fout:
+        train(model, NUM_EPOCHS, optimizer, criterion, train_loader, device, fout)
+        torch.save(model.state_dict(), 'weights/ClassificationWeights/weightsNoSoftmax3layers10epochs.pth')
+        test(model, classes, test_loader, device, fout)

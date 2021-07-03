@@ -19,6 +19,9 @@ if __name__ == '__main__':
     cuda = torch.cuda.is_available()
     optimizer = optim.Adam(model.parameters(), lr=INIT_LR)
     scheduler = lr_scheduler.StepLR(optimizer, 8, gamma=0.1, last_epoch=-1)
+    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    model.to(device)
+    loss_fn.to(device)
 
-    fit(train_loader, test_loader, model, loss_fn, optimizer, scheduler, NUM_EPOCHS, cuda, train_epoch, test_epoch)
-    torch.save(model.state_dict(), '../weights/TripletWeights/FitTriplet3layer128deep10epochs.pth')
+    fit(train_loader, test_loader, model, loss_fn, optimizer, scheduler, NUM_EPOCHS, cuda, train_epoch, test_epoch, 'triplet.txt')
+    torch.save(model.state_dict(), 'weights/TripletWeights/FitTriplet3layer128deep10epochs.pth')
