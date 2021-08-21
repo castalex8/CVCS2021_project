@@ -69,7 +69,7 @@ class RoadSignNet(Module):
             # Dropout(0.5),
 
             # softmax classifier
-            Linear(128, 2),
+            Linear(128, classes),
         )
 
     # Defining the forward pass
@@ -78,3 +78,4 @@ class RoadSignNet(Module):
         x = self.flatten(x)
         x = self.linear_layers(x)
         return x
+
