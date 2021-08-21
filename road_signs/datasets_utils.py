@@ -8,37 +8,53 @@ from road_signs.German.dataset.GermanTrafficSignDatasetAbs import TRANSFORMS as 
 from road_signs.Unknown.dataset.UnknownDatasetAbs import TRANSFORMS as UNKNOWN_TRANSFORM, UnknownDatasetAbs
 
 
-TEST_IMG = 'pedestrian.png'
+TEST_IMG = 'pedestrian.jpg'
 DATASET = 'mapillary'
+RETRIEVAL_IMAGES_DIR = os.path.join('road_signs', 'retrieval_images', DATASET)
 
 
 datasets = {
     'mapillary': {
         'transform': MAPILLARY_TRANSFORM,
         'dataset': MapillaryDatasetAbs(train=True),
-        'weights': '0012.pth',
+        'class_weights': '0012.pth',
+        'retrieval_siamese_weights': '0013.pth',
         'get_images': lambda x: x.labels,
         'get_image': lambda x: x,
         'get_label': lambda x: x['label'],
-        'classes': MAPILLARY_CLASSES
+        'classes': MAPILLARY_CLASSES,
+        'get_image_from_path': lambda retr_img: [
+            img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
+            if retr_img.split('__')[-1] in img['path']
+         ][0]
     },
     'german': {
         'transform': GERMAN_TRANSFORM,
         'dataset': GermanTrafficSignDatasetAbs(train=True),
-        'weights': '0004.pth',
+        'class_weights': '0004.pth',
+        'retrieval_siamese_weights': '0005.pth',
         'get_images': lambda x: x.img_labels.values,
         'get_image': lambda x: x[-1],
         'get_label': lambda x: get_classes()[x[-2]],
-        'classes': get_classes()
+        'classes': get_classes(),
+        'get_image_from_path': lambda retr_img: [
+            img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
+            if retr_img.split('__')[-1] in img[-1]
+         ][0]
     },
     'unknown': {
         'transform': UNKNOWN_TRANSFORM,
         'dataset': UnknownDatasetAbs(train=True),
-        'weights': '0011.pth',
+        'class_weights': '0011.pth',
+        'retrieval_siamese_weights': '0016.pth',
         'get_images': lambda x: x.labels,
         'get_image': lambda x: x,
         'get_label': lambda x: x['label'],
-        'classes': UNKNOWN_CLASSES
+        'classes': UNKNOWN_CLASSES,
+        'get_image_from_path': lambda retr_img: [
+            img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
+            if retr_img.split('__')[-1] in img['path']
+         ][0]
     }
 }
 
@@ -51,8 +67,9 @@ def get_dataset():
     return datasets[DATASET]
 
 
-def get_weights():
-    return os.path.join('weights', datasets[DATASET]['weights'])
+def get_weights(task='retrieval_siamese'):
+    return os.path.join('road_signs', 'weights', datasets[DATASET]['class_weights']) if task == 'classification' else \
+        os.path.join('road_signs', 'weights', datasets[DATASET]['retrieval_siamese_weights'])
 
 
 def get_formatted_test_image():
@@ -64,4 +81,8 @@ def get_formatted_image(img):
 
 
 def get_predicted_class(prediction):
-    return datasets[DATASET][prediction]
+    return datasets[DATASET]['classes'][prediction]
+
+
+def get_retrieval_images():
+    return [os.path.join(RETRIEVAL_IMAGES_DIR, f) for f in os.listdir(RETRIEVAL_IMAGES_DIR)]
