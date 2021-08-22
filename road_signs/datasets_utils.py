@@ -84,8 +84,8 @@ def get_formatted_test_image():
     return datasets[DATASET]['transform'](read_image(TEST_IMG).float()).reshape([1, 3, 32, 32])
 
 
-def get_formatted_image(img):
-    return datasets[DATASET]['transform'](img.float()).reshape([1, 3, 32, 32])
+def get_formatted_image(img, device):
+    return datasets[DATASET]['transform'](img.float()).reshape([1, 3, 32, 32]).to(device)
 
 
 def get_predicted_class(prediction):
