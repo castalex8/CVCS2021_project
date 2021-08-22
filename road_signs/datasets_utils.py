@@ -35,7 +35,7 @@ datasets = {
         'dataset': GermanTrafficSignDatasetAbs(train=True),
         'class_weights': '0004.pth',
         'retrieval_siamese_weights': '0005.pth',
-        # 'retrieval_triplet_weights': '0017.pth',
+        'retrieval_triplet_weights': '0018.pth',
         'get_images': lambda x: x.img_labels.values,
         'get_image': lambda x: x[-1],
         'get_label': lambda x: GERMAN_CLASSES[x[-2]],

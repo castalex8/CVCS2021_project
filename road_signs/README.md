@@ -6,7 +6,7 @@ you need to download the datasets and set the correct environment variables.
 Inside the mapillary folder must exist the following folders:
 - annotation
 - images.train.0 (first train dataset)
-- images.eval.0 (evaluation dataset)
+- images.eval (evaluation dataset)
 
 
 The variables are the following:
