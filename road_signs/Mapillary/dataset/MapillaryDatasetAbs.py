@@ -6,12 +6,12 @@ from torch.utils.data.dataset import T_co
 from torchvision import transforms
 from torchvision.io import read_image
 
-BASE_DIR_LOCAL = '/home/corra/Desktop/Mapillary'
-BASE_DIR_LAB = '/nas/softechict-nas-3/mcorradini/'
+
 TRANSFORMS = transforms.Compose([
     transforms.Resize((32, 32)),
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
+
 
 CLASSES = [
     'regulatory--no-heavy-goods-vehicles--g2', 'regulatory--one-way-right--g3', 'regulatory--stop--g1',
@@ -37,7 +37,7 @@ NUM_SAMPLES = 5000
 
 class MapillaryDatasetAbs(Dataset):
     def __init__(self, train=True, trans=None):
-        self.base_dir = BASE_DIR_LOCAL if os.getenv('IS_LOCAL') else BASE_DIR_LAB
+        self.base_dir = os.getenv('MAPILLARY_BASE_DIR_LAB') if os.getenv('USE_LAB') else os.getenv('MAPILLARY_BASE_DIR_LOCAL')
         self.transform = trans if trans else TRANSFORMS
         self.train = train
         self.train_imgs = []
