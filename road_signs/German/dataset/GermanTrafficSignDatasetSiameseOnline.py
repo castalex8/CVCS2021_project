@@ -1,5 +1,5 @@
 import numpy as np
-from road_signs.German.dataset.GermanTrafficSignDatasetAbs import get_classes
+from road_signs.German.dataset.GermanTrafficSignDatasetAbs import CLASSES
 from road_signs.German.dataset.GermanTrafficSignDatasetRetr import GermanTrafficSignDatasetRetr
 
 
@@ -45,7 +45,7 @@ class GermanTrafficSignDatasetSiamese(GermanTrafficSignDatasetRetr):
                 # No match
                 label2 = img1.ClassId
                 while label2 == img1.ClassId:
-                    label2 = np.random.randint(0, len(get_classes()))
+                    label2 = np.random.randint(0, len(CLASSES))
                     img2 = self.img_classes[label2][np.random.randint(0, len(self.img_classes[label2]))]
 
             img1 = img1.Path

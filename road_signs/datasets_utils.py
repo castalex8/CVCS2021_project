@@ -4,7 +4,8 @@ from torchvision.io import read_image
 from road_signs.Mapillary.dataset.MapillaryDatasetAbs import CLASSES as MAPILLARY_CLASSES, MapillaryDatasetAbs
 from road_signs.Unknown.dataset.UnknownDatasetAbs import CLASSES as UNKNOWN_CLASSES
 from road_signs.Mapillary.dataset.MapillaryDatasetAbs import TRANSFORMS as MAPILLARY_TRANSFORM
-from road_signs.German.dataset.GermanTrafficSignDatasetAbs import TRANSFORMS as GERMAN_TRANSFORM, GermanTrafficSignDatasetAbs, get_classes
+from road_signs.German.dataset.GermanTrafficSignDatasetAbs import TRANSFORMS as GERMAN_TRANSFORM, \
+    GermanTrafficSignDatasetAbs, CLASSES as GERMAN_CLASSES
 from road_signs.Unknown.dataset.UnknownDatasetAbs import TRANSFORMS as UNKNOWN_TRANSFORM, UnknownDatasetAbs
 
 
@@ -18,7 +19,7 @@ datasets = {
         'transform': MAPILLARY_TRANSFORM,
         'dataset': MapillaryDatasetAbs(train=True),
         'class_weights': '0012.pth',
-        'retrieval_siamese_weights': '0013.pth',
+        'retrieval_siamese_weights': '0017.pth',
         'get_images': lambda x: x.labels,
         'get_image': lambda x: x,
         'get_label': lambda x: x['label'],
@@ -35,8 +36,8 @@ datasets = {
         'retrieval_siamese_weights': '0005.pth',
         'get_images': lambda x: x.img_labels.values,
         'get_image': lambda x: x[-1],
-        'get_label': lambda x: get_classes()[x[-2]],
-        'classes': get_classes(),
+        'get_label': lambda x: GERMAN_CLASSES[x[-2]],
+        'classes': GERMAN_CLASSES,
         'get_image_from_path': lambda retr_img: [
             img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
             if retr_img.split('__')[-1] in img[-1]
