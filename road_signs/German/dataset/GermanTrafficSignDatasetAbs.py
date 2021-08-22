@@ -5,8 +5,6 @@ import pandas as pd
 from torchvision.io import read_image
 
 
-BASE_DIR_LOCAL = '/home/corra/Desktop/gtsrb-german-traffic-sign'
-BASE_DIR_LAB = '/nas/softechict-nas-3/mcorradini/gtsrb-german-traffic-sign'
 TRANSFORMS = transforms.Compose([
     transforms.Resize((32, 32)),
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
@@ -27,14 +25,14 @@ CLASSES = [
 ]
 
 
-def is_local():
-    return os.getenv('IS_LOCAL')
+def use_lab():
+    return os.getenv('USE_LAB')
 
 
 class GermanTrafficSignDatasetAbs(Dataset):
     def __init__(self, train=True, trans=None):
         self.train = train
-        self.base_dir = BASE_DIR_LOCAL if is_local() else BASE_DIR_LAB
+        self.base_dir = os.getenv('GERMAN_BASE_DIR_LAB') if use_lab() else os.getenv('GERMAN_BASE_DIR_LOCAL')
         self.img_labels = pd.read_csv(os.path.join(self.base_dir, 'Train.csv' if self.train else 'Test.csv'))
         self.transform = trans if trans else TRANSFORMS
 

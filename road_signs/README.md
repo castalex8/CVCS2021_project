@@ -1,0 +1,28 @@
+### HOW TO USE LIBRARIES
+
+In order to properly use the retrieval and classifications libraries
+you need to download the datasets and set the correct environment variables.
+
+Inside the mapillary folder must exist the following folders:
+- annotation
+- images.train.0 (first train dataset)
+- images.eval.0 (evaluation dataset)
+
+
+The variables are the following:
+- GERMAN_BASE_DIR_LAB (es. GERMAN_BASE_DIR_LAB=/nas/softechict-nas-3/user/gtsrb-german-traffic-sign)
+- GERMAN_BASE_DIR_LOCAL (es. GERMAN_BASE_DIR_LOCAL=/home/user/Desktop/gtsrb-german-traffic-sign) 
+- UNKNOWN_BASE_DIR_LAB 
+- UNKNOWN_BASE_DIR_LOCAL
+- MAPILLARY_BASE_DIR_LAB
+- MAPILLARY_BASE_DIR_LOCAL
+- DATASET: set the dataset you want to use. The values acceptable values are:
+  - mapillary
+  - unknown
+  - german
+
+
+Resources:
+- German Dataset: https://www.kaggle.com/meowmeowmeowmeowmeow/gtsrb-german-traffic-sign/download
+- Unknown Dataset: https://www.kaggle.com/andrewmvd/road-sign-detection/download
+- Mapillary Dataset: https://www.mapillary.com/dataset/trafficsign

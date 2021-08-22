@@ -6,18 +6,19 @@ from torchvision import transforms
 import xml.etree.ElementTree as ET
 
 
-BASE_DIR_LOCAL = '/home/corra/Desktop/Unknown'
-BASE_DIR_LAB = '/nas/softechict-nas-3/mcorradini/Unknown'
 TRANSFORMS = transforms.Compose([
     transforms.Resize((32, 32)),
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
+
+
+
 CLASSES = ['trafficlight', 'speedlimit', 'crosswalk', 'stop']
 
 
 class UnknownDatasetAbs(Dataset):
     def __init__(self, train=True, trans=None):
-        self.base_dir = BASE_DIR_LOCAL if os.getenv('IS_LOCAL') else BASE_DIR_LAB
+        self.base_dir = os.getenv('UNKNOWN_BASE_DIR_LAB') if os.getenv('USE_LAB') else os.getenv('UNKNOWN_BASE_DIR_LOCAL')
         self.transform = trans if trans else TRANSFORMS
         self.train = train
         self.classes = 4

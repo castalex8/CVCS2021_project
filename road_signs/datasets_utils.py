@@ -10,7 +10,7 @@ from road_signs.Unknown.dataset.UnknownDatasetAbs import TRANSFORMS as UNKNOWN_T
 
 
 TEST_IMG = 'pedestrian.jpg'
-DATASET = 'mapillary'
+DATASET = os.getenv('DATASET')
 RETRIEVAL_IMAGES_DIR = os.path.join('road_signs', 'retrieval_images', DATASET)
 
 
