@@ -19,7 +19,8 @@ datasets = {
         'transform': MAPILLARY_TRANSFORM,
         'dataset': MapillaryDatasetAbs(train=True),
         'class_weights': '0012.pth',
-        'retrieval_siamese_weights': '0017.pth',
+        'retrieval_siamese_weights': '0015.pth',
+        'retrieval_triplet_weights': '0017.pth',
         'get_images': lambda x: x.labels,
         'get_image': lambda x: x,
         'get_label': lambda x: x['label'],
@@ -34,6 +35,7 @@ datasets = {
         'dataset': GermanTrafficSignDatasetAbs(train=True),
         'class_weights': '0004.pth',
         'retrieval_siamese_weights': '0005.pth',
+        # 'retrieval_triplet_weights': '0017.pth',
         'get_images': lambda x: x.img_labels.values,
         'get_image': lambda x: x[-1],
         'get_label': lambda x: GERMAN_CLASSES[x[-2]],
@@ -48,6 +50,7 @@ datasets = {
         'dataset': UnknownDatasetAbs(train=True),
         'class_weights': '0011.pth',
         'retrieval_siamese_weights': '0016.pth',
+        'retrieval_triplet_weights': '0014.pth',
         'get_images': lambda x: x.labels,
         'get_image': lambda x: x,
         'get_label': lambda x: x['label'],
@@ -69,8 +72,12 @@ def get_dataset():
 
 
 def get_weights(task='retrieval_siamese'):
-    return os.path.join('road_signs', 'weights', datasets[DATASET]['class_weights']) if task == 'classification' else \
-        os.path.join('road_signs', 'weights', datasets[DATASET]['retrieval_siamese_weights'])
+    if task == 'retrieval_siamese':
+        return os.path.join('road_signs', 'weights', datasets[DATASET]['retrieval_siamese_weights'])
+    elif task == 'retrieval_triplet':
+        return os.path.join('road_signs', 'weights', datasets[DATASET]['retrieval_triplet_weights'])
+    elif task == 'classification':
+        return os.path.join('road_signs', 'weights', datasets[DATASET]['class_weights'])
 
 
 def get_formatted_test_image():

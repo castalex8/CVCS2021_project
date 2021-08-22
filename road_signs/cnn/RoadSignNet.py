@@ -34,39 +34,18 @@ class RoadSignNet(Module):
             ReLU(),
             BatchNorm2d(32),
             MaxPool2d(kernel_size=2),
-
-            # # Fourth set of (CONV => RELU => CONV => RELU) * 2 => POOL
-            # Conv2d(32, 64, kernel_size=kernel_size, padding_mode='zeros', padding=kernel_size),
-            # ReLU(),
-            # BatchNorm2d(64),
-            # Conv2d(64, 64, kernel_size=kernel_size, padding_mode='zeros', padding=kernel_size),
-            # ReLU(),
-            # BatchNorm2d(64),
-            # MaxPool2d(kernel_size=2),
-            #
-            # # Fifth set of (CONV => RELU => CONV => RELU) * 2 => POOL
-            # Conv2d(64, 128, kernel_size=kernel_size, padding_mode='zeros', padding=kernel_size),
-            # ReLU(),
-            # BatchNorm2d(128),
-            # Conv2d(128, 128, kernel_size=kernel_size, padding_mode='zeros', padding=kernel_size),
-            # ReLU(),
-            # BatchNorm2d(128),
-            # MaxPool2d(kernel_size=2),
         )
 
         self.flatten = Flatten()
         self.linear_layers = Sequential(
             # first set of FC => RELU layers
+            # Linear(8196, 128),
             Linear(3872, 128),
             ReLU(),
-            # BatchNorm2d(1),
-            # Dropout(0.5),
 
             # second set of FC => RELU layers
             Linear(128, 128),
             ReLU(),
-            # BatchNorm2d(1),
-            # Dropout(0.5),
 
             # softmax classifier
             Linear(128, classes),
@@ -78,4 +57,3 @@ class RoadSignNet(Module):
         x = self.flatten(x)
         x = self.linear_layers(x)
         return x
-
