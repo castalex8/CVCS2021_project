@@ -1,21 +1,14 @@
-import torch
 from road_signs.cnn.SiameseNet import SiameseNet
-from road_signs.datasets_utils import get_dataset, get_weights, get_formatted_image, get_device, get_retrieval_images
+from road_signs.datasets_utils import *
 from road_signs.loss.CostrastiveLoss import ContrastiveLoss
 from road_signs.utils.Const import MARGIN
-
-
-def get_image_from_path(ds, img):
-    return ds['transform'](
-        ds['dataset'].read_image(ds['get_image'](ds['get_image_from_path'](img))).float()
-    ).reshape([1, 3, 32, 32])
 
 
 def get_embedding_from_img(model, device, img1, img2):
     target = torch.tensor([1])
 
     if device.type == 'cuda':
-        img1, img2, target = img1.cuda(), img2.cuda(device), target.to(device)
+        img1, img2, target = img1.cuda(), img2.cuda(), target.to(device)
 
     return model(img1, img2)
 
@@ -25,18 +18,6 @@ def get_embedding_from_img_path(ds, model, device, img1, img2):
     img2 = get_image_from_path(ds, img2)
 
     return get_embedding_from_img(model, device, img1, img2)
-
-
-def update_losses(loss_fn, losses, max_results, img_embedding, retr_embedding, label_retr_img):
-    l = loss_fn(img_embedding, retr_embedding, torch.tensor([1]))
-    if len(losses) < max_results:
-        losses.append((l, label_retr_img))
-    else:
-        losses = sorted(losses, key=lambda x: x[0])
-        if l < losses[-1][0]:
-            losses[-1] = (l, label_retr_img)
-
-    return losses
 
 
 def retrieve_siamese_top_n_results(img, max_results=10):
@@ -61,10 +42,12 @@ def retrieve_siamese_top_n_results(img, max_results=10):
             ds, model, device, retrieval_images[i], retrieval_images[i + 1]
         )
         losses = update_losses(
-            loss_fn, losses, max_results, img_embedding, retr_embedding1, ds['get_image_from_path'](retrieval_images[i])
+            loss_fn(img_embedding, retr_embedding1, torch.tensor([1])),
+            losses, max_results, ds['get_image_from_path'](retrieval_images[i])
         )
         losses = update_losses(
-            loss_fn, losses, max_results, img_embedding, retr_embedding2, ds['get_image_from_path'](retrieval_images[i + 1])
+            loss_fn(img_embedding, retr_embedding2, torch.tensor([1])),
+            losses, max_results, ds['get_image_from_path'](retrieval_images[i + 1])
         )
         i += 2
 

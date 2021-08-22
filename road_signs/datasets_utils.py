@@ -87,3 +87,20 @@ def get_predicted_class(prediction):
 
 def get_retrieval_images():
     return [os.path.join(RETRIEVAL_IMAGES_DIR, f) for f in os.listdir(RETRIEVAL_IMAGES_DIR)]
+
+
+def get_image_from_path(ds, img):
+    return ds['transform'](
+        ds['dataset'].read_image(ds['get_image'](ds['get_image_from_path'](img))).float()
+    ).reshape([1, 3, 32, 32])
+
+
+def update_losses(l, losses, max_results, label_retr_img):
+    if len(losses) < max_results:
+        losses.append((l, label_retr_img))
+    else:
+        losses = sorted(losses, key=lambda x: x[0])
+        if l < losses[-1][0]:
+            losses[-1] = (l, label_retr_img)
+
+    return losses

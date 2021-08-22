@@ -15,7 +15,6 @@ def train_epoch(train_loader, model, loss_fn, optimizer, cuda, fout):
             data = tuple(d.cuda() for d in data)
 
         # Compute prediction error
-        # outputs = (model(data[0]), model(data[1]), model(data[2]))
         outputs = model(*data)
         loss = loss_fn(*outputs)
         losses.append(loss.item())
@@ -27,7 +26,7 @@ def train_epoch(train_loader, model, loss_fn, optimizer, cuda, fout):
         optimizer.step()
 
         if batch_idx % 100 == 0:
-            m = f'[{datetime.datetime.now() - start}] Train: [{batch_idx * len(data[0])}/{len(train_loader.dataset)}' \
+            m = f'[{datetime.datetime.now() - start}] Train: [{batch_idx * len(data[0])}/{len(train_loader)}' \
                 f' ({100. * batch_idx / len(train_loader):.2f}%)]\tLoss: {np.mean(losses):.6f}\n'
             print(m, end='')
             fout.write(m)
@@ -46,7 +45,6 @@ def test_epoch(val_loader, model, loss_fn, cuda):
             if cuda:
                 data = tuple(d.cuda() for d in data)
 
-            # outputs = (model(data[0]), model(data[1]), model(data[2]))
             outputs = model(*data)
             loss = loss_fn(*outputs)
             val_loss += loss.item()

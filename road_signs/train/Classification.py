@@ -2,7 +2,7 @@ import torch
 
 
 def train(model, epochs, optimizer, criterion, train_loader, device, fout):
-    size = len(train_loader.dataset)
+    size = len(train_loader.ds)
     for epoch in range(epochs):
         fout.write(f"Epoch {epoch + 1} -------------------------------\n")
         print(f"Epoch {epoch + 1} -------------------------------")
@@ -24,7 +24,7 @@ def train(model, epochs, optimizer, criterion, train_loader, device, fout):
 
             # print statistics
             running_loss += loss.item()
-            if i % 100 == 99:  # print every 2000 mini-batches
+            if i % 10 == 0:  # print every 2000 mini-batches
                 fout.write(f"loss: {loss:>7f}  [{i * len(inputs):>5d}/{size:>5d}]\n")
                 print(f"loss: {loss:>7f}  [{i * len(inputs):>5d}/{size:>5d}]")
                 running_loss = 0.0
