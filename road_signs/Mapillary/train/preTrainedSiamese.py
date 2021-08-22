@@ -1,14 +1,15 @@
 import torch
+import os
 import torchvision
 from torch import optim
 from torch.optim import lr_scheduler
 from road_signs.cnn.RoadSignNetFC import get_road_sign_fc
-from road_signs.datasets.GermanTrafficSignDatasetSiameseOnline import GermanTrafficSignDatasetSiamese
 from road_signs.loss.CostrastiveLoss import ContrastiveLoss
 from road_signs.train.Siamese import train_epoch, test_epoch
 from road_signs.train.fit import fit
 from road_signs.utils.Const import *
 from torch.utils.data import DataLoader
+from road_signs.Mapillary.dataset.MapillaryDatasetSiamese import MapillarySiamese
 
 
 if __name__ == '__main__':
@@ -20,9 +21,8 @@ if __name__ == '__main__':
 
     model_conv.fc = get_road_sign_fc()
 
-    model_conv = model_conv.double()
-    train_loader = DataLoader(GermanTrafficSignDatasetSiamese(train=True), batch_size=BS, shuffle=True)
-    test_loader = DataLoader(GermanTrafficSignDatasetSiamese(train=False), batch_size=BS, shuffle=True)
+    train_loader = DataLoader(MapillarySiamese(train=True), batch_size=BS, shuffle=True, pin_memory=bool(os.getenv('USE_LAB')))
+    test_loader = DataLoader(MapillarySiamese(train=False), batch_size=BS, shuffle=True, pin_memory=bool(os.getenv('USE_LAB')))
     loss_fn = ContrastiveLoss(margin=MARGIN)
 
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
@@ -36,4 +36,4 @@ if __name__ == '__main__':
     scheduler = lr_scheduler.StepLR(optim, step_size=7, gamma=0.1)
 
     fit(train_loader, test_loader, model_conv, loss_fn, optim, scheduler, NUM_EPOCHS, cuda, train_epoch, test_epoch, 'pretrained_siamese.txt')
-    torch.save(model_conv.state_dict(), 'weights/SiameseWeights/preTrainedFitSiamese3layer256deep.pth')
+    torch.save(model_conv.state_dict(), '../weights/SiameseWeights/preTrainedFitSiamese3layer256deep.pth')

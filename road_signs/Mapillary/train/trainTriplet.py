@@ -1,20 +1,21 @@
 import torch
+import os
 from torch import optim
 from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 from torch.nn import TripletMarginWithDistanceLoss, PairwiseDistance
 from road_signs.cnn.TripletNet import TripletNet
-from road_signs.datasets.GermanTrafficSignDatasetTripletOnline import GermanTrafficSignDatasetTriplet
 from road_signs.utils.Const import *
-from road_signs.train.Tripet import train_epoch, test_epoch
+from road_signs.train.Triplet import train_epoch, test_epoch
 from road_signs.train.fit import fit
+from road_signs.Mapillary.dataset.MapillaryDatasetTripletOnline import MapillaryDatasetTriplet
 
 
 if __name__ == '__main__':
-    train_loader = DataLoader(GermanTrafficSignDatasetTriplet(train=True), batch_size=BS, shuffle=True)
-    test_loader = DataLoader(GermanTrafficSignDatasetTriplet(train=False), batch_size=BS, shuffle=True)
+    train_loader = DataLoader(MapillaryDatasetTriplet(train=True), batch_size=BS, shuffle=True, pin_memory=bool(os.getenv('USE_LAB')))
+    test_loader = DataLoader(MapillaryDatasetTriplet(train=False), batch_size=BS, shuffle=True, pin_memory=bool(os.getenv('USE_LAB')))
 
-    model = TripletNet().double()
+    model = TripletNet()
     loss_fn = TripletMarginWithDistanceLoss(distance_function=PairwiseDistance(), margin=MARGIN)
     cuda = torch.cuda.is_available()
     optimizer = optim.Adam(model.parameters(), lr=INIT_LR)
@@ -24,4 +25,4 @@ if __name__ == '__main__':
     loss_fn.to(device)
 
     fit(train_loader, test_loader, model, loss_fn, optimizer, scheduler, NUM_EPOCHS, cuda, train_epoch, test_epoch, 'triplet.txt')
-    torch.save(model.state_dict(), 'weights/TripletWeights/FitTriplet3layer128deep10epochs.pth')
+    torch.save(model.state_dict(), '../../weights/Mapillary/triplet.pth')
