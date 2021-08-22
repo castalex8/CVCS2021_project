@@ -12,7 +12,7 @@ def predict_class(img):
     model.to(device)
     model.eval()
 
-    outputs = model(get_formatted_image(img))
+    outputs = model(get_formatted_image(img, device))
     _, predictions = torch.max(outputs, 1)
 
     return predictions

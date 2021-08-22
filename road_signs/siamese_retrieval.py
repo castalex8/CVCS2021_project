@@ -26,7 +26,7 @@ def retrieve_siamese_top_n_results(img, max_results=10):
     device = get_device()
     loss_fn = ContrastiveLoss(margin=MARGIN)
     model.load_state_dict(torch.load(get_weights('retrieval_siamese'), map_location=torch.device(device.type)))
-    formatted_img = get_formatted_image(img)
+    formatted_img = get_formatted_image(img, device)
 
     model.to(device)
     loss_fn.to(device)

@@ -24,7 +24,7 @@ def retrieve_triplet_top_n_results(img, max_results=10):
     loss_fn = PairwiseDistance()
     model = TripletNet()
     model.load_state_dict(torch.load(get_weights('retrieval_triplet'), map_location=torch.device(device.type)))
-    formatted_img = get_formatted_image(img)
+    formatted_img = get_formatted_image(img, device)
     img_embedding, _, _ = get_embedding_from_img(model, device, formatted_img, formatted_img, formatted_img)
 
     retrieval_images = get_retrieval_images()
