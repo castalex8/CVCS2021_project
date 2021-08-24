@@ -2,7 +2,7 @@ import torch
 
 
 def train(model, epochs, optimizer, criterion, train_loader, device, fout):
-    size = len(train_loader.ds)
+    size = len(train_loader)
     for epoch in range(epochs):
         fout.write(f"Epoch {epoch + 1} -------------------------------\n")
         print(f"Epoch {epoch + 1} -------------------------------")

@@ -27,7 +27,7 @@ def train_epoch(train_loader, model, loss_fn, optimizer, cuda, fout):
         optimizer.step()
 
         if batch_idx % 10 == 0:
-            m = f'[{datetime.datetime.now() - start}] Train: [{batch_idx * len(data[0])}/{len(train_loader.ds)}'\
+            m = f'[{datetime.datetime.now() - start}] Train: [{batch_idx * len(data[0])}/{len(train_loader)}'\
                 f' ({100. * batch_idx / len(train_loader):.2f}%)]\tLoss: {np.mean(losses):.6f}\n'
             print(m, end='')
             fout.write(m)
