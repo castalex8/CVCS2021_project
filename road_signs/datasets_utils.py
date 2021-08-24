@@ -48,7 +48,7 @@ datasets = {
     'unknown': {
         'transform': UNKNOWN_TRANSFORM,
         'dataset': UnknownDatasetAbs(train=True),
-        'class_weights': '0011.pth',
+        'class_weights': '0020.pth',
         'retrieval_siamese_weights': '0016.pth',
         'retrieval_triplet_weights': '0014.pth',
         'get_images': lambda x: x.labels,
