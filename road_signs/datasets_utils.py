@@ -81,11 +81,11 @@ def get_weights(task='retrieval_siamese'):
 
 
 def get_formatted_test_image():
-    return datasets[DATASET]['transform'](read_image(TEST_IMG).float()).reshape([1, 3, 32, 32])
+    return datasets[DATASET]['transform'](read_image(TEST_IMG).float()).reshape([1, 3, 32, 32]).to(get_device())
 
 
 def get_formatted_image(img):
-    return datasets[DATASET]['transform'](img.float()).reshape([1, 3, 32, 32])
+    return datasets[DATASET]['transform'](img.float()).reshape([1, 3, 32, 32]).to(get_device())
 
 
 def get_predicted_class(prediction):
@@ -99,7 +99,7 @@ def get_retrieval_images():
 def get_image_from_path(ds, img):
     return ds['transform'](
         ds['dataset'].read_image(ds['get_image'](ds['get_image_from_path'](img))).float()
-    ).reshape([1, 3, 32, 32])
+    ).reshape([1, 3, 32, 32]).to(get_device())
 
 
 def update_losses(l, losses, max_results, label_retr_img):
