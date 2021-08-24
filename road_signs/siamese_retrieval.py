@@ -9,8 +9,10 @@ model = SiameseNet()
 device = get_device()
 loss_fn = ContrastiveLoss(margin=MARGIN)
 model.load_state_dict(torch.load(get_weights('retrieval_siamese'), map_location=torch.device(device.type)))
+
 model.to(device)
 loss_fn.to(device)
+model.eval()
 
 
 def get_embedding_from_img(img1, img2):
@@ -33,7 +35,7 @@ def retrieve_siamese_top_n_results(img, max_results=10):
     retrieval_images = get_retrieval_images()
     formatted_img = get_formatted_image(img)
     img_embedding, _ = get_embedding_from_img(formatted_img, formatted_img)
-    model.eval()
+
     losses = []
     i = 0
 
