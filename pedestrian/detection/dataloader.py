@@ -32,17 +32,17 @@ class CocoDataset(Dataset):
         annotations_id = self.coco.getAnnIds(imgIds=id_image)
         annotations = self.coco.loadAnns(annotations_id)
 
-        return img, annotations
+        return img, annotations, id_image, self.coco.getCatIds(catNms=['person'])
 
-
+'''
 # Test funzioni len e getitem tramite iterazione
 dataset = CocoDataset(ANNOTATION_FILE, show_bbox=True)
 
 print(f"numero di immagini: {len(dataset)}")
 
-image, target = dataset[5]
+# image, target = dataset[5]
 i = 0
-for image, target in dataset:
+for image, target, id_image, image_cat in dataset:
     print(f"Immagine #{i}")
     i += 1
     print(json.dumps(target[0]["bbox"], indent=4))
@@ -56,3 +56,4 @@ for image, target in dataset:
 
     plt.imshow(image)
     plt.show()
+'''
