@@ -39,7 +39,6 @@ class CocoDataset(Dataset):
         areas = []
         labels = torch.ones((num_objs,), dtype=torch.int64)
         for i in range(num_objs):
-            print("annotation.com.com.org ciaone\n", annotations[i])
             x_min = annotations[i]['bbox'][0]
             y_min = annotations[i]['bbox'][1]
             x_max = x_min + annotations[i]['bbox'][2]
