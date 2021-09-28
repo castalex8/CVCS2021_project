@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw
 
 ANNOTATION_FILE = os.getenv("ANNOTATION_FILE")
 WEIGHT_PATH = os.getenv("WEIGHT_PATH")
-RESULT_FILENAME = "C:\\Users\\Alessandro\\Desktop\\results.json"
+RESULT_FILENAME = os.getenv("RESULT_FILENAME")
 SCORE_THRESHOLD = 0
 
 dataset = CocoDataset(ANNOTATION_FILE)
