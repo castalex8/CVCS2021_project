@@ -1,10 +1,12 @@
 import os
+
 from torch.nn import CrossEntropyLoss
 from torch.optim import SGD
 from torch.utils.data import DataLoader
+
 from road_signs.Mapillary.dataset.MapillaryDatasetAbs import CLASSES
-from road_signs.cnn.RoadSignNet import RoadSignNet
 from road_signs.Mapillary.dataset.MapillaryDatasetClass import MapillaryClass
+from road_signs.cnn.RoadSignNet import RoadSignNet
 from road_signs.train.Classification import *
 from road_signs.utils.Const import *
 

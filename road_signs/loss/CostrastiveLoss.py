@@ -10,13 +10,14 @@ class ContrastiveLoss(nn.Module):
     https://towardsdatascience.com/how-to-choose-your-loss-when-designing-a-siamese-neural-net-contrastive-triplet-or-quadruplet-ecba11944ec
     """
 
-    def __init__(self, margin, distance_fn=CosineSimilarity()):
+    def __init__(self, margin: float):
         super(ContrastiveLoss, self).__init__()
         self.margin = margin
         self.eps = 1e-9
 
     def forward(self, output1, output2, target):
         distances = (output2 - output1).pow(2).sum(1)  # squared distances
-        losses = 0.5 * (target.float() * distances +
-                        (1 + -1 * target).float() * F.relu(self.margin - (distances + self.eps).sqrt()).pow(2))
+        losses = 0.5 * (target.float() * distances + (1 + -1 * target).float() *
+                        F.relu(self.margin - (distances + self.eps).sqrt()).pow(2))
+
         return losses.mean()

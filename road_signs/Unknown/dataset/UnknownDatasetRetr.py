@@ -9,5 +9,5 @@ class UnknownDatasetRetr(UnknownDatasetAbs):
         for label in self.labels:
             self.img_classes[label['label']].append(label)
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int):
         raise NotImplemented

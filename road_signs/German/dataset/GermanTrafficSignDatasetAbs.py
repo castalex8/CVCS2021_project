@@ -1,9 +1,9 @@
 import os
+
+import pandas as pd
+import torchvision.io
 from torch.utils.data import Dataset
 from torchvision import transforms
-import pandas as pd
-from torchvision.io import read_image
-
 
 TRANSFORMS = transforms.Compose([
     transforms.Resize((32, 32)),
@@ -36,13 +36,13 @@ class GermanTrafficSignDatasetAbs(Dataset):
         self.img_labels = pd.read_csv(os.path.join(self.base_dir, 'Train.csv' if self.train else 'Test.csv'))
         self.transform = trans if trans else TRANSFORMS
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.img_labels)
 
-    def read_image(self, item_path):
+    def read_image(self, item_path: str) -> torchvision.io.image:
         img_path = os.path.join(self.base_dir, item_path)
-        image = read_image(img_path)
+        image = torchvision.io.read_image(img_path)
         return image.double()
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int):
         raise NotImplementedError

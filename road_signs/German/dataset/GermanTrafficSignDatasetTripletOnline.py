@@ -1,4 +1,8 @@
+from typing import Tuple, List
+
 import numpy as np
+import torchvision
+
 from road_signs.German.dataset.GermanTrafficSignDatasetRetr import GermanTrafficSignDatasetRetr
 
 
@@ -19,10 +23,10 @@ class GermanTrafficSignDatasetTriplet(GermanTrafficSignDatasetRetr):
 
                 self.triplets[i].append(negative)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.img_labels)
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int) -> Tuple[Tuple[torchvision.io.image, torchvision.io.image, torchvision.io.image], List]:
         if self.train:
             anchor = self.img_labels.iloc[index]
             anchor_label = anchor.ClassId

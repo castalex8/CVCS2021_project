@@ -1,16 +1,17 @@
 import os
+import xml.etree.ElementTree as ET
+
 import cv2
 from torch.utils.data import Dataset
 from torch.utils.data.dataset import T_co
 from torchvision import transforms
-import xml.etree.ElementTree as ET
+import torchvision.io
 
 
 TRANSFORMS = transforms.Compose([
     transforms.Resize((32, 32)),
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
-
 
 
 CLASSES = ['trafficlight', 'speedlimit', 'crosswalk', 'stop']
@@ -44,15 +45,15 @@ class UnknownDatasetAbs(Dataset):
                     }
                 })
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.labels)
 
-    def read_image(self, img):
+    def read_image(self, img: dict) -> torchvision.io.image:
         img_path = os.path.join(self.base_dir, img['path'])
         bb = img['bbox']
         image = transforms.ToTensor()(cv2.imread(img_path)[:, :, :3])
         image = image[:, int(bb['ymin']):int(bb['ymax']), int(bb['xmin']):int(bb['xmax'])].float()
         return image
 
-    def __getitem__(self, index) -> T_co:
+    def __getitem__(self, index: int):
         raise NotImplementedError

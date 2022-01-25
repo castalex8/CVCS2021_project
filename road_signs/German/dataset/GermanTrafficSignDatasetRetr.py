@@ -8,5 +8,5 @@ class GermanTrafficSignDatasetRetr(GermanTrafficSignDatasetAbs):
         for val in self.img_labels.values:
             self.img_classes[val[-2]].append(val[-1])
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int):
         raise NotImplemented

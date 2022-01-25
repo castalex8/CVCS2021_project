@@ -1,4 +1,8 @@
+from typing import Tuple, List
+
 import numpy as np
+import torchvision
+
 from road_signs.Mapillary.dataset.MapillaryDatasetRetr import MapillaryDatasetRetr
 
 
@@ -23,7 +27,7 @@ class MapillaryDatasetTriplet(MapillaryDatasetRetr):
 
                 self.triplets[i].append(negative)
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int) -> Tuple[Tuple[torchvision.io.image, torchvision.io.image, torchvision.io.image], List]:
         if self.train:
             anchor = self.labels[index]
             positive = anchor

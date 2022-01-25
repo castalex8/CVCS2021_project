@@ -1,18 +1,14 @@
-from torch.nn import CrossEntropyLoss
 import os
+
+from torch.nn import CrossEntropyLoss
 from torch.optim import SGD
 from torch.utils.data import DataLoader
-from road_signs.cnn.RoadSignNet import RoadSignNet
-from road_signs.German.dataset.GermanTrafficSignDatasetClass import GermanTrafficSignDatasetClass
+
 from road_signs.German.dataset.GermanTrafficSignDatasetAbs import CLASSES
+from road_signs.German.dataset.GermanTrafficSignDatasetClass import GermanTrafficSignDatasetClass
+from road_signs.cnn.RoadSignNet import RoadSignNet
 from road_signs.train.Classification import *
-
-
-# initialize the number of epochs to train for, base learning rate, and batch size
-NUM_EPOCHS = 10
-INIT_LR = 1e-3
-MOMENTUM = 0.9
-BS = 64
+from road_signs.utils.Const import *
 
 
 if __name__ == '__main__':

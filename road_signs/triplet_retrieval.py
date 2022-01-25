@@ -1,7 +1,7 @@
 from torch.nn import PairwiseDistance
+
 from road_signs.cnn.TripletNet import TripletNet
 from road_signs.datasets_utils import *
-
 
 ds = get_dataset()
 device = get_device()
@@ -14,14 +14,14 @@ loss_fn.to(device)
 model.eval()
 
 
-def get_embedding_from_img(img1, img2, img3):
+def get_embedding_from_img(img1: torchvision.io.image, img2: torchvision.io.image, img3: torchvision.io.image):
     if device.type == 'cuda':
         img1, img2, target = img1.cuda(), img2.cuda(), img3.cuda(),
 
     return model(img1, img2, img3)
 
 
-def get_embedding_from_img_path(img1, img2, img3):
+def get_embedding_from_img_path(img1: torchvision.io.image, img2: torchvision.io.image, img3: torchvision.io.image):
     img1 = get_image_from_path(ds, img1)
     img2 = get_image_from_path(ds, img2)
     img3 = get_image_from_path(ds, img3)
@@ -29,7 +29,7 @@ def get_embedding_from_img_path(img1, img2, img3):
     return get_embedding_from_img(img1, img2, img3)
 
 
-def retrieve_triplet_top_n_results(img, max_results=10):
+def retrieve_triplet_top_n_results(img: torchvision.io.image, max_results: int = 10) -> List[float]:
     formatted_img = get_formatted_image(img)
     retrieval_images = get_retrieval_images()
     img_embedding, _, _ = get_embedding_from_img(formatted_img, formatted_img, formatted_img)

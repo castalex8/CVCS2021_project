@@ -1,4 +1,8 @@
+from typing import Tuple
+
 import numpy as np
+import torchvision
+
 from road_signs.Unknown.dataset.UnknownDatasetRetr import UnknownDatasetRetr
 
 
@@ -34,7 +38,7 @@ class UnknownSiamese(UnknownDatasetRetr):
 
             self.test_pairs = positive_pairs + negative_pairs
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int) -> Tuple[Tuple[torchvision.io.image, torchvision.io.image], bool]:
         if self.train:
             target = np.random.randint(0, 2)
             img1 = self.labels[index]
