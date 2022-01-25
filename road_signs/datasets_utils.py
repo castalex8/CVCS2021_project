@@ -1,24 +1,25 @@
 import os
+from typing import List
+
 import torch
-from torchvision.io import read_image
-from road_signs.Mapillary.dataset.MapillaryDatasetAbs import CLASSES as MAPILLARY_CLASSES, MapillaryDatasetAbs
-from road_signs.Unknown.dataset.UnknownDatasetAbs import CLASSES as UNKNOWN_CLASSES
-from road_signs.Mapillary.dataset.MapillaryDatasetAbs import TRANSFORMS as MAPILLARY_TRANSFORM
+import torchvision
+
 from road_signs.German.dataset.GermanTrafficSignDatasetAbs import TRANSFORMS as GERMAN_TRANSFORM, \
     GermanTrafficSignDatasetAbs, CLASSES as GERMAN_CLASSES
+from road_signs.Mapillary.dataset.MapillaryDatasetAbs import CLASSES as MAPILLARY_CLASSES, MapillaryDatasetAbs
+from road_signs.Mapillary.dataset.MapillaryDatasetAbs import TRANSFORMS as MAPILLARY_TRANSFORM
+from road_signs.Unknown.dataset.UnknownDatasetAbs import CLASSES as UNKNOWN_CLASSES
 from road_signs.Unknown.dataset.UnknownDatasetAbs import TRANSFORMS as UNKNOWN_TRANSFORM, UnknownDatasetAbs
-
 
 TEST_IMG = 'pedestrian.jpg'
 DATASET = os.getenv('DATASET')
 RETRIEVAL_IMAGES_DIR = os.path.join('road_signs', 'retrieval_images', DATASET)
 
-
 datasets = {
     'mapillary': {
         'transform': MAPILLARY_TRANSFORM,
         'dataset': MapillaryDatasetAbs(train=True),
-        'class_weights': '0012.pth',
+        'class_weights': '0021.pth',
         'retrieval_siamese_weights': '0015.pth',
         'retrieval_triplet_weights': '0017.pth',
         'get_images': lambda x: x.labels,
@@ -28,7 +29,7 @@ datasets = {
         'get_image_from_path': lambda retr_img: [
             img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
             if retr_img.split('__')[-1] in img['path']
-         ][0]
+        ][0]
     },
     'german': {
         'transform': GERMAN_TRANSFORM,
@@ -43,7 +44,7 @@ datasets = {
         'get_image_from_path': lambda retr_img: [
             img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
             if retr_img.split('__')[-1] in img[-1]
-         ][0]
+        ][0]
     },
     'unknown': {
         'transform': UNKNOWN_TRANSFORM,
@@ -58,20 +59,20 @@ datasets = {
         'get_image_from_path': lambda retr_img: [
             img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
             if retr_img.split('__')[-1] in img['path']
-         ][0]
+        ][0]
     }
 }
 
 
-def get_device():
+def get_device() -> torch.device:
     return torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 
-def get_dataset():
+def get_dataset() -> dict:
     return datasets[DATASET]
 
 
-def get_weights(task='retrieval_siamese'):
+def get_weights(task: str = 'retrieval_siamese') -> str:
     if task == 'retrieval_siamese':
         return os.path.join('road_signs', 'weights', datasets[DATASET]['retrieval_siamese_weights'])
     elif task == 'retrieval_triplet':
@@ -80,11 +81,13 @@ def get_weights(task='retrieval_siamese'):
         return os.path.join('road_signs', 'weights', datasets[DATASET]['class_weights'])
 
 
-def get_formatted_test_image():
-    return datasets[DATASET]['transform'](read_image(TEST_IMG).float()).reshape([1, 3, 32, 32]).to(get_device())
+def get_formatted_test_image() -> torchvision.io.image:
+    return datasets[DATASET]['transform'](
+        torchvision.io.read_image(TEST_IMG).float()
+    ).reshape([1, 3, 32, 32]).to(get_device())
 
 
-def get_formatted_image(img):
+def get_formatted_image(img: torchvision.io.image) -> torchvision.io.image:
     return datasets[DATASET]['transform'](img.float()).reshape([1, 3, 32, 32]).to(get_device())
 
 
@@ -92,11 +95,11 @@ def get_predicted_class(prediction):
     return datasets[DATASET]['classes'][prediction]
 
 
-def get_retrieval_images():
+def get_retrieval_images() -> List[str]:
     return [os.path.join(RETRIEVAL_IMAGES_DIR, f) for f in os.listdir(RETRIEVAL_IMAGES_DIR)]
 
 
-def get_image_from_path(ds, img):
+def get_image_from_path(ds: dict, img: str) -> torchvision.io.image:
     return ds['transform'](
         ds['dataset'].read_image(ds['get_image'](ds['get_image_from_path'](img))).float()
     ).reshape([1, 3, 32, 32]).to(get_device())

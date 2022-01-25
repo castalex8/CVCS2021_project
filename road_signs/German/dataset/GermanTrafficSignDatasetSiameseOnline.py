@@ -1,4 +1,8 @@
+from typing import Tuple
+
 import numpy as np
+import torchvision
+
 from road_signs.German.dataset.GermanTrafficSignDatasetAbs import CLASSES
 from road_signs.German.dataset.GermanTrafficSignDatasetRetr import GermanTrafficSignDatasetRetr
 
@@ -31,7 +35,7 @@ class GermanTrafficSignDatasetSiamese(GermanTrafficSignDatasetRetr):
 
             self.test_pairs = positive_pairs + negative_pairs
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int) -> Tuple[Tuple[torchvision.io.image, torchvision.io.image], bool]:
         if self.train:
             target = np.random.randint(0, 2)
             img1 = self.img_labels.iloc[index]

@@ -1,9 +1,10 @@
+import glob
 import ntpath
 import os
-from torchvision.io import read_image
-from road_signs.classification import predict_class_label
-import glob
 
+from torchvision.io import read_image
+
+from road_signs.classification import predict_class_label
 
 # EVALUATE_FOLDER = '/home/corra/Desktop/test_images'
 EVALUATE_FOLDER = '/homes/mcorradini/CVCS2021_project/road_signs/test_images'

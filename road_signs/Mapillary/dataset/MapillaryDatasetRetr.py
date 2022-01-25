@@ -18,5 +18,5 @@ class MapillaryDatasetRetr(MapillaryDatasetAbs):
             if len(val) < 5:
                 print(key, len(val))
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int):
         raise NotImplemented

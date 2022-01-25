@@ -1,10 +1,10 @@
 import json
-import os
 import ntpath
+import os
+
+import torchvision.io
 from torch.utils.data import Dataset
-from torch.utils.data.dataset import T_co
 from torchvision import transforms
-from torchvision.io import read_image
 
 
 TRANSFORMS = transforms.Compose([
@@ -59,15 +59,15 @@ class MapillaryDatasetAbs(Dataset):
                     if obj['label'] in CLASSES:
                         self.labels.append({**obj, **{'path': os.path.join(self.base_dir, 'images.eval', img)}})
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.labels)
 
-    def read_image(self, img):
+    def read_image(self, img: dict) -> torchvision.io.image:
         img_path = os.path.join(self.base_dir, img['path'])
         bb = img['bbox']
-        image = read_image(img_path)
+        image = torchvision.io.read_image(img_path)
         return image[:, int(bb['ymin']):int(bb['ymax']), int(bb['xmin']):int(bb['xmax'])].float()
 
-    def __getitem__(self, index) -> T_co:
+    def __getitem__(self, index: int):
         raise NotImplementedError
 

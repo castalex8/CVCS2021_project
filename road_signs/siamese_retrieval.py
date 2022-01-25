@@ -15,7 +15,7 @@ loss_fn.to(device)
 model.eval()
 
 
-def get_embedding_from_img(img1, img2):
+def get_embedding_from_img(img1: torchvision.io.image, img2: torchvision.io.image):
     target = torch.tensor([1])
 
     if device.type == 'cuda':
@@ -24,14 +24,14 @@ def get_embedding_from_img(img1, img2):
     return model(img1, img2)
 
 
-def get_embedding_from_img_path(img1, img2):
+def get_embedding_from_img_path(img1: torchvision.io.image, img2: torchvision.io.image):
     img1 = get_image_from_path(ds, img1)
     img2 = get_image_from_path(ds, img2)
 
     return get_embedding_from_img(img1, img2)
 
 
-def retrieve_siamese_top_n_results(img, max_results=10):
+def retrieve_siamese_top_n_results(img: torchvision.io.image, max_results: int = 10) -> List[dict]:
     retrieval_images = get_retrieval_images()
     formatted_img = get_formatted_image(img)
     img_embedding, _ = get_embedding_from_img(formatted_img, formatted_img)
