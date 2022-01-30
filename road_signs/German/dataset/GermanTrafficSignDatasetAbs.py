@@ -25,10 +25,6 @@ CLASSES = [
 ]
 
 
-def use_lab():
-    return os.getenv('USE_LAB')
-
-
 class GermanTrafficSignDatasetAbs(Dataset):
     def __init__(self, train=True, trans=None):
         self.train = train

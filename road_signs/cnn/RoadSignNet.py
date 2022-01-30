@@ -1,8 +1,8 @@
-from torch.nn import Linear, ReLU, Sequential, Conv2d, MaxPool2d, Module, Softmax, BatchNorm2d, Dropout, Flatten
+from torch.nn import Linear, ReLU, Sequential, Conv2d, MaxPool2d, Module, BatchNorm2d, Flatten
 
 
 class RoadSignNet(Module):
-    def __init__(self, depth=3, classes=43, is_retrieval=False):
+    def __init__(self, classes: int = 1, depth: int = 3, is_retrieval: bool = False):
         super(RoadSignNet, self).__init__()
         kernel_size = (3, 3)
         classes = 2 if is_retrieval else classes

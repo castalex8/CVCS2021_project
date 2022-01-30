@@ -1,3 +1,3 @@
 __all__ = [
-    'MapillaryDatasetRetr', 'MapillaryDatasetAbs', 'MapillaryDatasetSiamese', 'MapillaryDatasetTripletOnline'
+    'MapillaryDatasetRetr', 'MapillaryDatasetAbs', 'MapillaryDatasetSiamese', 'MapillaryDatasetTriplet.py'
 ]

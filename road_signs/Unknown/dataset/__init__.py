@@ -1,3 +1,3 @@
 __all__ = [
-    'UnknownDatasetRetr', 'UnknownDatasetAbs', 'UnknownDatasetSiamese', 'UnknownDatasetTripletOnline'
+    'UnknownDatasetRetr', 'UnknownDatasetAbs', 'UnknownDatasetSiamese', 'UnknownDatasetTriplet.py'
 ]
