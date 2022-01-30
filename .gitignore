@@ -135,3 +135,4 @@ road_signs/siamese_triplet
 road_signs/all_weights_backups
 pedestrian/annotations
 pedestrian/weights
+road_signs/retrieval_images

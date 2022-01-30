@@ -2,10 +2,9 @@ import os
 import xml.etree.ElementTree as ET
 
 import cv2
-from torch.utils.data import Dataset
-from torch.utils.data.dataset import T_co
-from torchvision import transforms
 import torchvision.io
+from torch.utils.data import Dataset
+from torchvision import transforms
 
 
 TRANSFORMS = transforms.Compose([
@@ -19,7 +18,7 @@ CLASSES = ['trafficlight', 'speedlimit', 'crosswalk', 'stop']
 
 class UnknownDatasetAbs(Dataset):
     def __init__(self, train=True, trans=None):
-        self.base_dir = os.getenv('UNKNOWN_BASE_DIR_LAB') if os.getenv('USE_LAB') else os.getenv('UNKNOWN_BASE_DIR_LOCAL')
+        self.base_dir = os.getenv('UNKNOWN_BASE_DIR')
         self.transform = trans if trans else TRANSFORMS
         self.train = train
         self.classes = 4

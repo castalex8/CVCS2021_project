@@ -32,7 +32,7 @@ def use_lab():
 class GermanTrafficSignDatasetAbs(Dataset):
     def __init__(self, train=True, trans=None):
         self.train = train
-        self.base_dir = os.getenv('GERMAN_BASE_DIR_LAB') if use_lab() else os.getenv('GERMAN_BASE_DIR_LOCAL')
+        self.base_dir = os.getenv('GERMAN_BASE_DIR')
         self.img_labels = pd.read_csv(os.path.join(self.base_dir, 'Train.csv' if self.train else 'Test.csv'))
         self.transform = trans if trans else TRANSFORMS
 

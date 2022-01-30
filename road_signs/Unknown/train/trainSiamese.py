@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 
 from road_signs.Unknown.dataset.UnknownDatasetSiamese import UnknownSiamese
 from road_signs.cnn.SiameseNet import SiameseNet
-from road_signs.loss.CostrastiveLoss import ContrastiveLoss
+from road_signs.loss.ConstrastiveLoss import ContrastiveLoss
 from road_signs.train.Siamese import train_epoch, test_epoch
 from road_signs.train.fit import fit
 from road_signs.utils.Const import *

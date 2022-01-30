@@ -10,12 +10,9 @@ Inside the mapillary folder must exist the following folders:
 
 
 The variables are the following:
-- GERMAN_BASE_DIR_LAB (es. GERMAN_BASE_DIR_LAB=/nas/softechict-nas-3/user/gtsrb-german-traffic-sign)
-- GERMAN_BASE_DIR_LOCAL (es. GERMAN_BASE_DIR_LOCAL=/home/user/Desktop/gtsrb-german-traffic-sign) 
-- UNKNOWN_BASE_DIR_LAB 
-- UNKNOWN_BASE_DIR_LOCAL
-- MAPILLARY_BASE_DIR_LAB
-- MAPILLARY_BASE_DIR_LOCAL
+- GERMAN_BASE_DIR (es. GERMAN_BASE_DIR=/nas/softechict-nas-3/user/gtsrb-german-traffic-sign) 
+- UNKNOWN_BASE_DIR
+- MAPILLARY_BASE_DIR
 - DATASET: set the dataset you want to use. The values acceptable values are:
   - mapillary
   - unknown

@@ -37,7 +37,7 @@ NUM_SAMPLES = 5000
 
 class MapillaryDatasetAbs(Dataset):
     def __init__(self, train=True, trans=None):
-        self.base_dir = os.getenv('MAPILLARY_BASE_DIR_LAB') if os.getenv('USE_LAB') else os.getenv('MAPILLARY_BASE_DIR_LOCAL')
+        self.base_dir = os.getenv('MAPILLARY_BASE_DIR')
         self.transform = trans if trans else TRANSFORMS
         self.train = train
         self.train_imgs = []

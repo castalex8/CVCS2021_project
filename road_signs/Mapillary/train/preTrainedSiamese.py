@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader
 
 from road_signs.Mapillary.dataset.MapillaryDatasetSiamese import MapillarySiamese
 from road_signs.cnn.RoadSignNetFC import get_road_sign_fc
-from road_signs.loss.CostrastiveLoss import ContrastiveLoss
+from road_signs.loss.ConstrastiveLoss import ContrastiveLoss
 from road_signs.train.Siamese import train_epoch, test_epoch
 from road_signs.train.fit import fit
 from road_signs.utils.Const import *

@@ -1,6 +1,6 @@
 from road_signs.cnn.SiameseNet import SiameseNet
 from road_signs.datasets_utils import *
-from road_signs.loss.CostrastiveLoss import ContrastiveLoss
+from road_signs.loss.ConstrastiveLoss import ContrastiveLoss
 from road_signs.utils.Const import MARGIN
 
 
@@ -42,11 +42,11 @@ def retrieve_siamese_top_n_results(img: torchvision.io.image, max_results: int =
     while i < len(retrieval_images):
         retr_embedding1, retr_embedding2 = get_embedding_from_img_path(retrieval_images[i], retrieval_images[i + 1])
         losses = update_losses(
-            loss_fn(img_embedding, retr_embedding1, torch.tensor([1])),
+            loss_fn(img_embedding, retr_embedding1, torch.tensor([1]).to(device)),
             losses, max_results, ds['get_image_from_path'](retrieval_images[i])
         )
         losses = update_losses(
-            loss_fn(img_embedding, retr_embedding2, torch.tensor([1])),
+            loss_fn(img_embedding, retr_embedding2, torch.tensor([1]).to(device)),
             losses, max_results, ds['get_image_from_path'](retrieval_images[i + 1])
         )
         i += 2
