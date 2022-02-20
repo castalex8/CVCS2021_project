@@ -8,10 +8,10 @@ from torch.utils.data import DataLoader
 
 from road_signs.Mapillary.dataset.MapillaryDatasetSiamese import MapillarySiamese
 from road_signs.cnn.RoadSignNetFC import get_road_sign_fc
-from road_signs.loss.CostrastiveLoss import ContrastiveLoss
+from road_signs.loss.ConstrastiveLoss import ContrastiveLoss
 from road_signs.train.Siamese import train_epoch, test_epoch
-from road_signs.train.fit import fit
-from road_signs.utils.Const import *
+from road_signs.utils.train import fit
+from road_signs.utils.Const import BS, MARGIN, INIT_LR, STEP_SIZE, GAMMA, NUM_EPOCHS
 
 
 if __name__ == '__main__':
@@ -37,5 +37,5 @@ if __name__ == '__main__':
     # Decay LR by a factor of 0.1 every 7 epochs
     scheduler = lr_scheduler.StepLR(optim, step_size=STEP_SIZE, gamma=GAMMA)
 
-    fit(train_loader, test_loader, model_conv, loss_fn, optim, scheduler, NUM_EPOCHS, cuda, train_epoch, test_epoch, 'pretrained_siamese.txt')
+    fit(train_loader, test_loader, model_conv, loss_fn, optim, NUM_EPOCHS, cuda, train_epoch, test_epoch, 'pretrained_siamese.txt', scheduler)
     torch.save(model_conv.state_dict(), '../../weights/Mapillary/preTrainedSiamese.pth')

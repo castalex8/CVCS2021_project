@@ -1,5 +1,6 @@
 import torch
 import torchvision
+from torch import Tensor
 
 from road_signs.cnn.RoadSignNet import RoadSignNet
 from road_signs.datasets_utils import get_dataset, get_weights, get_predicted_class, get_formatted_image, get_device
@@ -13,7 +14,7 @@ model.to(device)
 model.eval()
 
 
-def predict_class(img: torchvision.io.image) -> int:
+def predict_class(img: torchvision.io.image) -> Tensor:
     outputs = model(get_formatted_image(img))
     _, predictions = torch.max(outputs, 1)
 

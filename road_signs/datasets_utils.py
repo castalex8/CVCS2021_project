@@ -13,14 +13,14 @@ from road_signs.Unknown.dataset.UnknownDatasetAbs import TRANSFORMS as UNKNOWN_T
 
 TEST_IMG = 'pedestrian.jpg'
 DATASET = os.getenv('DATASET')
-RETRIEVAL_IMAGES_DIR = os.path.join('road_signs', 'retrieval_images', DATASET)
+RETRIEVAL_IMAGES_DIR = os.path.join(os.getenv('RETRIEVAL_IMAGES_DIR'), DATASET)
 
 datasets = {
     'mapillary': {
         'transform': MAPILLARY_TRANSFORM,
         'dataset': MapillaryDatasetAbs(train=True),
         'class_weights': '0021.pth',
-        'retrieval_siamese_weights': '0015.pth',
+        'retrieval_siamese_weights': '0013.pth',
         'retrieval_triplet_weights': '0017.pth',
         'get_images': lambda x: x.labels,
         'get_image': lambda x: x,

@@ -13,6 +13,8 @@ TRANSFORMS = transforms.Compose([
 ])
 
 
+# Classes that have taken into study from the all dataset
+# Other classes have been removed due to redundancy
 CLASSES = [
     'regulatory--no-heavy-goods-vehicles--g2', 'regulatory--one-way-right--g3', 'regulatory--stop--g1',
     'regulatory--no-left-turn--g1', 'regulatory--no-entry--g1', 'regulatory--yield--g1',
@@ -32,17 +34,17 @@ CLASSES = [
 ]
 
 
+# Limit the number of sample due to performance constraints
 NUM_SAMPLES = 5000
 
 
 class MapillaryDatasetAbs(Dataset):
     def __init__(self, train=True, trans=None):
-        self.base_dir = os.getenv('MAPILLARY_BASE_DIR_LAB') if os.getenv('USE_LAB') else os.getenv('MAPILLARY_BASE_DIR_LOCAL')
+        self.base_dir = os.getenv('MAPILLARY_BASE_DIR')
         self.transform = trans if trans else TRANSFORMS
         self.train = train
         self.train_imgs = []
         self.test_imgs = []
-        self.classes = 313
         self.labels = []
         self.BASE_ANNOTATION_DIR = os.path.join(self.base_dir, 'annotations/annotations')
 
@@ -53,6 +55,7 @@ class MapillaryDatasetAbs(Dataset):
                     if obj['label'] in CLASSES:
                         self.labels.append({**obj, **{'path': os.path.join(self.base_dir, 'images.train.0', img)}})
         else:
+            # The test set is 5 times smaller the training set
             self.test_imgs = os.listdir(os.path.join(self.base_dir, 'images.eval'))[:NUM_SAMPLES // 5]
             for img in self.test_imgs:
                 for obj in json.load(open(os.path.join(self.BASE_ANNOTATION_DIR, ntpath.basename(img).replace('.jpg', '.json'))))['objects']:

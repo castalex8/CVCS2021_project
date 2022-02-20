@@ -16,7 +16,7 @@ model.eval()
 
 def get_embedding_from_img(img1: torchvision.io.image, img2: torchvision.io.image, img3: torchvision.io.image):
     if device.type == 'cuda':
-        img1, img2, target = img1.cuda(), img2.cuda(), img3.cuda(),
+        img1, img2, img3 = img1.cuda(), img2.cuda(), img3.cuda(),
 
     return model(img1, img2, img3)
 
