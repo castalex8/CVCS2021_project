@@ -136,3 +136,4 @@ road_signs/all_weights_backups
 pedestrian/annotations
 pedestrian/weights
 road_signs/retrieval_images
+street_view/output

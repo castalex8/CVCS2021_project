@@ -4,20 +4,13 @@ from datetime import datetime
 from shutil import rmtree
 from time import sleep
 
-from pynput.keyboard import Listener, Key
-from selenium.common.exceptions import ElementNotInteractableException
+from selenium.common.exceptions import ElementNotInteractableException, NoSuchWindowException
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from seleniumwire import webdriver
 
 
 def is_page_loaded(driver: webdriver.Chrome):
-    print('###############')
-
-    for r in driver.requests[-4:]:
-        if r.response:
-            print(r.response.status_code, r.host, r.response.headers['Content-Type'])
-
     latest_response = []
     while len(latest_response) != 2:
         for r in driver.requests[-4:]:
@@ -58,9 +51,9 @@ def main():
     while driver.title != 'Google Maps':
         sleep(1)
 
-    print('Set the position of the streetview and press a key')
+    print('Set the position of the streetview and press a key. '
+          'Then close the browser to stop screenshot acquisition.')
     input()
-    print('Press esc to stop the image acquisition')
 
     e = None
     while True:
@@ -70,15 +63,20 @@ def main():
         except ElementNotInteractableException:
             continue
 
-    while Listener(on_press=lambda key: key != Key.esc):
-        e.send_keys(Keys.UP)
-        sleep(1)
-
-        while not is_page_loaded(driver):
+    while True:
+        try:
+            e.send_keys(Keys.UP)
             sleep(1)
 
-        driver.save_screenshot(os.path.join(out_folder, f"{datetime.now().isoformat()}.png"))
-        sleep(1)
+            while not is_page_loaded(driver):
+                sleep(1)
+
+            driver.save_screenshot(os.path.join(out_folder, f"{datetime.now().isoformat()}.png"))
+            sleep(1)
+        except NoSuchWindowException:
+            break
+
+    print(f'Screenshot stored in {out_folder} folder')
 
 
 if __name__ == '__main__':
