@@ -17,7 +17,8 @@ RETRIEVAL_IMAGES_DIR = os.getenv('RETRIEVAL_IMAGES_DIR')
 
 def clean_ds():
     for folder in ['german', 'unknown', 'mapillary']:
-        shutil.rmtree(os.path.join(RETRIEVAL_IMAGES_DIR, folder))
+        if pathlib.Path(folder).exists():
+            shutil.rmtree(os.path.join(RETRIEVAL_IMAGES_DIR, folder))
 
 
 def exists_or_create(ds: str):
@@ -92,7 +93,7 @@ def create_mapillary_ds():
             d[cls] += 1
             shutil.copy(
                 os.path.join(base_path, picture),
-                os.path.join(RETRIEVAL_IMAGES_DIR, 'mapillary', f"{cls}-{d[cls]}__{picture}")
+                os.path.join(RETRIEVAL_IMAGES_DIR, 'mapillary', f"{cls}---{d[cls]}___{picture}")
             )
     print('done!')
 

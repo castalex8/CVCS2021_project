@@ -72,3 +72,39 @@ def retrieve_triplet_top_n_results(img: torchvision.io.image, max_results: int =
         i += 3
 
     return sorted(losses, key=lambda x: x[0])
+
+
+def retrieve_triplet_top_n_results_from_embedding(img: torchvision.io.image, max_results: int = 10) -> List[dict]:
+    formatted_img = get_formatted_image(img)
+    img_embedding, _, _ = get_embedding_from_img(formatted_img, formatted_img, formatted_img)
+
+    losses = []
+    embedding_base_dir = get_embedding_path('triplet')
+    files = os.listdir(embedding_base_dir)
+
+    for i in range(0, len(files), 3):
+        if len(files[i:i + 3]) == 3:
+            f1, f2, f3 = files[i:i + 3]
+        elif len(files[i:i + 3]) == 2:
+            f1, f2, f3 = files[i:i + 3] + ['']
+        else:
+            f1, f2, f3 = files[i:i + 3] + ['', '']
+
+        losses = update_losses(
+            loss_fn(img_embedding, torch.load(os.path.join(embedding_base_dir, f1))),
+            losses, max_results, ds['get_image_from_path'](f1[:-2])
+        )
+
+        if f2 != '':
+            losses = update_losses(
+                loss_fn(img_embedding, torch.load(os.path.join(embedding_base_dir, f2))),
+                losses, max_results, ds['get_image_from_path'](f2[:-2])
+            )
+
+        if f3 != '':
+            losses = update_losses(
+                loss_fn(img_embedding, torch.load(os.path.join(embedding_base_dir, f3))),
+                losses, max_results, ds['get_image_from_path'](f3[:-2])
+            )
+
+    return sorted(losses, key=lambda x: x[0])

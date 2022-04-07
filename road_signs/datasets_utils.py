@@ -15,6 +15,7 @@ TEST_IMG = 'pedestrian.jpg'
 DATASET = os.getenv('DATASET')
 RETRIEVAL_IMAGES_DIR = os.path.join(os.getenv('RETRIEVAL_IMAGES_DIR'), DATASET)
 
+
 datasets = {
     'mapillary': {
         'transform': MAPILLARY_TRANSFORM,
@@ -28,7 +29,7 @@ datasets = {
         'classes': MAPILLARY_CLASSES,
         'get_image_from_path': lambda retr_img: [
             img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
-            if retr_img.split('__')[-1] in img['path']
+            if retr_img.split('___')[-1] in img['path']
         ][0]
     },
     'german': {
@@ -68,31 +69,31 @@ def get_device() -> torch.device:
     return torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 
-def get_dataset() -> dict:
-    return datasets[DATASET]
+def get_dataset(dataset=DATASET) -> dict:
+    return datasets[dataset]
 
 
-def get_weights(task: str = 'retrieval_siamese') -> str:
+def get_weights(task: str = 'retrieval_siamese', dataset=DATASET) -> str:
     if task == 'retrieval_siamese':
-        return os.path.join('road_signs', 'weights', datasets[DATASET]['retrieval_siamese_weights'])
+        return os.path.join('road_signs', 'weights', datasets[dataset]['retrieval_siamese_weights'])
     elif task == 'retrieval_triplet':
-        return os.path.join('road_signs', 'weights', datasets[DATASET]['retrieval_triplet_weights'])
+        return os.path.join('road_signs', 'weights', datasets[dataset]['retrieval_triplet_weights'])
     elif task == 'classification':
-        return os.path.join('road_signs', 'weights', datasets[DATASET]['class_weights'])
+        return os.path.join('road_signs', 'weights', datasets[dataset]['class_weights'])
 
 
-def get_formatted_test_image() -> torchvision.io.image:
-    return datasets[DATASET]['transform'](
+def get_formatted_test_image(dataset=DATASET) -> torchvision.io.image:
+    return datasets[dataset]['transform'](
         torchvision.io.read_image(TEST_IMG).float()
     ).reshape([1, 3, 32, 32]).to(get_device())
 
 
-def get_formatted_image(img: torchvision.io.image) -> torchvision.io.image:
-    return datasets[DATASET]['transform'](img.float()).reshape([1, 3, 32, 32]).to(get_device())
+def get_formatted_image(img: torchvision.io.image, dataset=DATASET) -> torchvision.io.image:
+    return datasets[dataset]['transform'](img.float()).reshape([1, 3, 32, 32]).to(get_device())
 
 
-def get_predicted_class(prediction):
-    return datasets[DATASET]['classes'][prediction]
+def get_predicted_class(prediction, dataset=DATASET):
+    return datasets[dataset]['classes'][prediction]
 
 
 def get_retrieval_images() -> List[str]:
@@ -114,3 +115,7 @@ def update_losses(l, losses, max_results, label_retr_img):
             losses[-1] = (l, label_retr_img)
 
     return losses
+
+
+def get_embedding_path(net: str = 'siamese', dataset=DATASET) -> str:
+    return os.path.join(os.getenv('RETRIEVAL_EMBEDDING_DIR'), net, dataset)

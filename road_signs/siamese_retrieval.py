@@ -45,10 +45,38 @@ def retrieve_siamese_top_n_results(img: torchvision.io.image, max_results: int =
             loss_fn(img_embedding, retr_embedding1, torch.tensor([1]).to(device)),
             losses, max_results, ds['get_image_from_path'](retrieval_images[i])
         )
-        losses = update_losses(
-            loss_fn(img_embedding, retr_embedding2, torch.tensor([1]).to(device)),
-            losses, max_results, ds['get_image_from_path'](retrieval_images[i + 1])
-        )
+
+        if (i + 1) < len(retrieval_images):
+            losses = update_losses(
+                loss_fn(img_embedding, retr_embedding2, torch.tensor([1]).to(device)),
+                losses, max_results, ds['get_image_from_path'](retrieval_images[i + 1])
+            )
+
         i += 2
+
+    return sorted(losses, key=lambda x: x[0])
+
+
+def retrieve_siamese_top_n_results_from_embedding(img: torchvision.io.image, max_results: int = 10) -> List[dict]:
+    formatted_img = get_formatted_image(img)
+    img_embedding, _ = get_embedding_from_img(formatted_img, formatted_img)
+
+    losses = []
+    files = os.listdir(get_embedding_path('siamese'))
+
+    if len(files) % 2 == 0:
+        files.append("")
+
+    for f1, f2 in list(zip(files, files[1:]))[::2]:
+        losses = update_losses(
+            loss_fn(img_embedding, torch.load(os.path.join(get_embedding_path(), f1)), torch.tensor([1]).to(device)),
+            losses, max_results, ds['get_image_from_path'](f1[:-2])
+        )
+
+        if f2 != '':
+            losses = update_losses(
+                loss_fn(img_embedding, torch.load(os.path.join(get_embedding_path(), f2)), torch.tensor([1]).to(device)),
+                losses, max_results, ds['get_image_from_path'](f2[:-2])
+            )
 
     return sorted(losses, key=lambda x: x[0])
