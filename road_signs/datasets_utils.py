@@ -11,9 +11,10 @@ from road_signs.Mapillary.dataset.MapillaryDatasetAbs import TRANSFORMS as MAPIL
 from road_signs.Unknown.dataset.UnknownDatasetAbs import CLASSES as UNKNOWN_CLASSES
 from road_signs.Unknown.dataset.UnknownDatasetAbs import TRANSFORMS as UNKNOWN_TRANSFORM, UnknownDatasetAbs
 
-TEST_IMG = 'pedestrian.jpg'
+TEST_IMG = 'pedestrian-1.jpg'
 DATASET = os.getenv('DATASET')
 RETRIEVAL_IMAGES_DIR = os.path.join(os.getenv('RETRIEVAL_IMAGES_DIR'), DATASET)
+WEIGHTS_DIR = os.path.join(os.getenv('WEIGHTS_DIR'))
 
 
 datasets = {
@@ -30,7 +31,8 @@ datasets = {
         'get_image_from_path': lambda retr_img: [
             img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
             if retr_img.split('___')[-1] in img['path']
-        ][0]
+        ][0],
+        'get_crosswalk_label': lambda: 'information--pedestrians-crossing--g1'
     },
     'german': {
         'transform': GERMAN_TRANSFORM,
@@ -45,7 +47,8 @@ datasets = {
         'get_image_from_path': lambda retr_img: [
             img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
             if retr_img.split('__')[-1] in img[-1]
-        ][0]
+        ][0],
+        'get_crosswalk_label': lambda: ''
     },
     'unknown': {
         'transform': UNKNOWN_TRANSFORM,
@@ -60,7 +63,8 @@ datasets = {
         'get_image_from_path': lambda retr_img: [
             img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
             if retr_img.split('__')[-1] in img['path']
-        ][0]
+        ][0],
+        'get_crosswalk_label': lambda: 'crosswalk'
     }
 }
 
@@ -75,11 +79,11 @@ def get_dataset(dataset=DATASET) -> dict:
 
 def get_weights(task: str = 'retrieval_siamese', dataset=DATASET) -> str:
     if task == 'retrieval_siamese':
-        return os.path.join('road_signs', 'weights', datasets[dataset]['retrieval_siamese_weights'])
+        return os.path.join(WEIGHTS_DIR, datasets[dataset]['retrieval_siamese_weights'])
     elif task == 'retrieval_triplet':
-        return os.path.join('road_signs', 'weights', datasets[dataset]['retrieval_triplet_weights'])
+        return os.path.join(WEIGHTS_DIR, datasets[dataset]['retrieval_triplet_weights'])
     elif task == 'classification':
-        return os.path.join('road_signs', 'weights', datasets[dataset]['class_weights'])
+        return os.path.join(WEIGHTS_DIR, datasets[dataset]['class_weights'])
 
 
 def get_formatted_test_image(dataset=DATASET) -> torchvision.io.image:
