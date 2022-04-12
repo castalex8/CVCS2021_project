@@ -25,7 +25,7 @@ def get_ap(labels: List[str]) -> float:
         ap += count / (i + 1)
 
     return ap / len(labels)
-pedestrian-5
+
 
 def main():
 
