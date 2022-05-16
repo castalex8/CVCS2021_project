@@ -136,4 +136,6 @@ road_signs/all_weights_backups
 pedestrian/annotations
 pedestrian/weights
 road_signs/retrieval_images
+road_signs/retrieval_embedding
+road_signs/test/sample_images
 street_view/output
