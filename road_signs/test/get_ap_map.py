@@ -20,7 +20,7 @@ def get_ap(labels: List[str]) -> float:
 
     for i, l in enumerate(labels):
         if l == crosswalk_label:
-           count += 1
+            count += 1
 
         ap += count / (i + 1)
 
