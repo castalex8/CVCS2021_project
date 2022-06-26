@@ -1,9 +1,16 @@
 import datetime
+from typing import Callable
+
 import numpy as np
 import torch
+from torch import nn
+from torch.optim import Optimizer
+from torch.utils.data import DataLoader
 
 
-def train_epoch(train_loader, model, loss_fn, optimizer, cuda, fout):
+def train_epoch(
+    train_loader: DataLoader, model: nn.Module, loss_fn: Callable, optimizer: Optimizer, cuda: bool, fout
+) -> float:
     model.train()
     losses = []
     total_loss = 0
@@ -38,7 +45,7 @@ def train_epoch(train_loader, model, loss_fn, optimizer, cuda, fout):
     return total_loss
 
 
-def test_epoch(val_loader, model, loss_fn, cuda):
+def test_epoch(val_loader: DataLoader, model: nn.Module, loss_fn: Callable, cuda: bool) -> float:
     with torch.no_grad():
         model.eval()
         val_loss = 0

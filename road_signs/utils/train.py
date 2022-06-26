@@ -1,9 +1,11 @@
 import datetime
+from typing import List, Callable
 
 import torch
-from torch import optim
+from torch import optim, nn
 from torch.nn import TripletMarginWithDistanceLoss, PairwiseDistance, CrossEntropyLoss
 from torch.optim import lr_scheduler, SGD
+from torch.utils.data import DataLoader
 
 from road_signs.cnn.RoadSignNet import RoadSignNet
 from road_signs.cnn.SiameseNet import SiameseNet
@@ -16,8 +18,8 @@ from road_signs.utils.Const import MARGIN, GAMMA, NUM_EPOCHS, STEP_SIZE, INIT_LR
 
 
 def fit(
-    train_loader, val_loader, model, loss_fn, optimizer, n_epochs, cuda,
-    train_epoch, test_epoch, filename, scheduler=None
+    train_loader: DataLoader, val_loader: DataLoader, model: nn.Module, loss_fn, optimizer, n_epochs: int, cuda: bool,
+    train_epoch: Callable, test_epoch: Callable, filename: str, scheduler=None
 ):
     with open(filename, 'a') as fout:
         for epoch in range(0, n_epochs):
@@ -35,7 +37,7 @@ def fit(
                 scheduler.step()
 
 
-def train_triplet(train_loader, test_loader, is_double: bool = False):
+def train_triplet(train_loader: DataLoader, test_loader: DataLoader, is_double: bool = False):
     model = TripletNet() if not is_double else TripletNet().double()
     loss_fn = TripletMarginWithDistanceLoss(distance_function=PairwiseDistance(), margin=MARGIN)
     cuda = torch.cuda.is_available()
@@ -46,13 +48,13 @@ def train_triplet(train_loader, test_loader, is_double: bool = False):
     loss_fn.to(device)
 
     fit(
-        train_loader, test_loader, model, loss_fn, optimizer, NUM_EPOCHS, cuda, triplet_train_epoch,
+        train_loader, test_loader, model, loss_fn, optimizer, 5, cuda, triplet_train_epoch,
         triplet_test_epoch, 'triplet.txt', scheduler
     )
-    torch.save(model.state_dict(), '../../weights/Unknown/triplet.pth')
+    torch.save(model.state_dict(), '0027.pth')
 
 
-def train_siamese(train_loader, test_loader, is_double: bool = False):
+def train_siamese(train_loader: DataLoader, test_loader: DataLoader, is_double: bool = False):
     model = SiameseNet() if not is_double else SiameseNet().double()
     loss_fn = ContrastiveLoss(margin=MARGIN)
     cuda = torch.cuda.is_available()
@@ -63,17 +65,17 @@ def train_siamese(train_loader, test_loader, is_double: bool = False):
     loss_fn.to(device)
 
     fit(
-        train_loader, test_loader, model, loss_fn, optimizer, NUM_EPOCHS, cuda, siamese_train_epoch, siamese_test_epoch,
+        train_loader, test_loader, model, loss_fn, optimizer, 20, cuda, siamese_train_epoch, siamese_test_epoch,
         'siamese.txt', scheduler
     )
-    torch.save(model.state_dict(), '../../weights/german/siamese.pth')
+    torch.save(model.state_dict(), '0025.pth')
 
 
-def train_classification(train_loader, test_loader, classes: int, is_double: bool = False):
+def train_classification(train_loader: DataLoader, test_loader: DataLoader, classes: List[str], is_double: bool = False):
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
     # defining the model
-    model = RoadSignNet(classes=classes) if not is_double else RoadSignNet(classes=classes).double()
+    model = RoadSignNet(classes=len(classes)) if not is_double else RoadSignNet(classes=len(classes)).double()
     model.to(device)
 
     # defining the optimizer
@@ -82,7 +84,7 @@ def train_classification(train_loader, test_loader, classes: int, is_double: boo
     # defining the loss function
     criterion = CrossEntropyLoss()
 
-    with open('class.txt', 'a') as fout:
-        class_train(model, NUM_EPOCHS, optimizer, criterion, train_loader, device, fout)
-        torch.save(model.state_dict(), '../../weights/German/class.pth')
+    with open('0010.txt', 'w') as fout:
+        class_train(model, 40, optimizer, criterion, train_loader, device, fout)
+        torch.save(model.state_dict(), '0020.pth')
         class_test(model, classes, test_loader, device, fout)

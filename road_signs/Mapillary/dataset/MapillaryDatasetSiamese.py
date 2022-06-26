@@ -12,7 +12,7 @@ class MapillarySiamese(MapillaryDatasetRetr):
         if not self.train:
             self.test_pairs = create_test_pairs(self.labels, self.img_classes)
 
-    def __getitem__(self, index: int) -> Tuple[tuple[torchvision.io.image, torchvision.io.image], bool]:
+    def __getitem__(self, index: int):
         if self.train:
             img1, img2, target = create_online_training_couple(self.labels[index], self.img_classes)
         else:

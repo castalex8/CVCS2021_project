@@ -19,7 +19,7 @@ CLASSES = [
     'regulatory--no-heavy-goods-vehicles--g2', 'regulatory--one-way-right--g3', 'regulatory--stop--g1',
     'regulatory--no-left-turn--g1', 'regulatory--no-entry--g1', 'regulatory--yield--g1',
     'regulatory--no-parking--g2', 'regulatory--maximum-speed-limit-60--g1', 'complementary--keep-left--g1',
-    'warning--pedestrians-crossing--g4', 'regulatory--no-stopping--g15',
+    'warning--pedestrians-crossing--g4', 'regulatory--no-stopping--g15', 'information--parking--g1',
     'regulatory--one-way-left--g1', 'complementary--chevron-right--g1', 'regulatory--priority-road--g4',
     'regulatory--no-heavy-goods-vehicles--g4', 'regulatory--maximum-speed-limit-70--g1',
     'regulatory--no-u-turn--g1', 'regulatory--keep-right--g1', 'regulatory--maximum-speed-limit-40--g1',
@@ -30,7 +30,7 @@ CLASSES = [
     'warning--other-danger--g1', 'regulatory--no-overtaking--g5', 'regulatory--maximum-speed-limit-30--g1',
     'warning--curve-right--g2', 'regulatory--no-stopping--g2', 'regulatory--go-straight--g1', 'warning--road-bump--g2',
     'regulatory--no-parking--g5', 'regulatory--keep-right--g4', 'regulatory--keep-left--g1',
-    'regulatory--height-limit--g1', 'information--parking--g1'
+    'regulatory--height-limit--g1'
 ]
 
 

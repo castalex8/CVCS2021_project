@@ -35,10 +35,15 @@ class GermanTrafficSignDatasetAbs(Dataset):
     def __len__(self) -> int:
         return len(self.img_labels)
 
-    def read_image(self, item_path: str) -> torchvision.io.image:
-        img_path = os.path.join(self.base_dir, item_path)
+    def read_image(self, item: pd.Series) -> torchvision.io.image:
+        img_path = os.path.join(self.base_dir, item.Path)
+        x1 = item.values[2]
+        x2 = item.values[4]
+        y1 = item.values[3]
+        y2 = item.values[5]
         image = torchvision.io.read_image(img_path)
-        return image.double()
+        img = image[:, y1:y2, x1:x2]
+        return img.double()
 
     def __getitem__(self, index: int):
         raise NotImplementedError

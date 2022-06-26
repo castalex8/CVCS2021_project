@@ -27,7 +27,7 @@ class UnknownDatasetAbs(Dataset):
         self.BASE_IMAGES_DIR = os.path.join(self.base_dir, 'images')
 
         for index, f in enumerate(os.listdir(self.BASE_ANNOTATION_DIR)):
-            if (not train and index % 5 == 0) or train:
+            if (not train and index % 5 == 0) or (train and index % 5 != 0):
                 ann_doc = ET.parse(os.path.join(self.BASE_ANNOTATION_DIR, f)).getroot()
                 self.labels.append({
                     'path': os.path.join(self.BASE_IMAGES_DIR, ann_doc.find("./filename").text),

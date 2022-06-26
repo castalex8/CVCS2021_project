@@ -3,7 +3,6 @@ import os
 import pathlib
 import shutil
 import xml.etree.ElementTree as ET
-from collections import defaultdict
 
 import cv2
 import torch

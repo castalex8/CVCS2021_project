@@ -13,6 +13,6 @@ class GermanTrafficSignDatasetClass(GermanTrafficSignDatasetAbs):
     def __len__(self) -> int:
         return len(self.img_labels)
 
-    def __getitem__(self, index: int) -> Tuple[torchvision.io.image, int]:
+    def __getitem__(self, index: int) -> torchvision.io.image:
         item = self.img_labels.iloc[index]
-        return self.transform(self.read_image(os.path.join(self.base_dir, item.Path))), item.ClassId
+        return self.transform(self.read_image(item)), item.ClassId

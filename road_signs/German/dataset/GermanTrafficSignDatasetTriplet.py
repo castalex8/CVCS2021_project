@@ -15,7 +15,7 @@ class GermanTrafficSignDatasetTriplet(GermanTrafficSignDatasetRetr):
             self.triplets = [[] for _ in range(len(self.img_labels))]
             for i in range(len(self.img_labels)):
                 class_id = self.img_labels.iloc[i].ClassId
-                self.triplets[i].append(self.img_labels.iloc[i].Path)
+                self.triplets[i].append(self.img_labels.iloc[i])
                 self.triplets[i].append(self.img_classes[class_id][np.random.randint(0, len(self.img_classes[class_id]))])
                 negative = None
                 negative_label = class_id
@@ -28,7 +28,7 @@ class GermanTrafficSignDatasetTriplet(GermanTrafficSignDatasetRetr):
     def __len__(self) -> int:
         return len(self.img_labels)
 
-    def __getitem__(self, index: int) -> Tuple[tuple[torchvision.io.image, torchvision.io.image, torchvision.io.image], List]:
+    def __getitem__(self, index: int):
         # Creating during the training random triplets
         if self.train:
             anchor = self.img_labels.iloc[index]
@@ -48,7 +48,6 @@ class GermanTrafficSignDatasetTriplet(GermanTrafficSignDatasetRetr):
                 negative_index = np.random.randint(0, len(self.img_classes[negative_label]))
 
             negative = self.img_classes[negative_label][negative_index]
-            anchor = anchor.Path
         else:
             # Return the triplet previously created
             anchor, positive, negative = self.triplets[index]

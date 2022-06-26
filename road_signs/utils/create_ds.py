@@ -4,7 +4,7 @@ from typing import List, Tuple
 import numpy as np
 
 
-def create_test_pairs(labels: List[dict], img_classes: defaultdict) -> List[List[dict, dict]]:
+def create_test_pairs(labels: List[dict], img_classes: defaultdict):
     positive_pairs = [[] for _ in range(len(labels) // 2)]
     negative_pairs = [[] for _ in range(len(labels) - len(positive_pairs))]
     for i in range(len(positive_pairs)):
@@ -52,7 +52,7 @@ def create_online_training_couple(img1, img_classes) -> Tuple[dict, dict, int]:
     return img2, img2, target
 
 
-def create_test_triplets(labels: List[dict], img_classes: defaultdict) -> List[List[dict, dict, dict]]:
+def create_test_triplets(labels: List[dict], img_classes: defaultdict):
     triplets = [[] for _ in range(len(labels))]
     for i in range(len(labels)):
         anchor = labels[i]

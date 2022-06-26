@@ -13,7 +13,7 @@ from road_signs.Unknown.dataset.UnknownDatasetAbs import TRANSFORMS as UNKNOWN_T
 
 TEST_IMG = 'pedestrian-1.jpg'
 DATASET = os.getenv('DATASET')
-RETRIEVAL_IMAGES_DIR = os.path.join(os.getenv('RETRIEVAL_IMAGES_DIR'), DATASET)
+RETRIEVAL_IMAGES_DIR = os.path.join(os.getenv('RETRIEVAL_IMAGES_DIR'), DATASET + '.eval')
 WEIGHTS_DIR = os.path.join(os.getenv('WEIGHTS_DIR'))
 
 
@@ -22,8 +22,8 @@ datasets = {
         'transform': MAPILLARY_TRANSFORM,
         'dataset': MapillaryDatasetAbs(train=True),
         'class_weights': '0021.pth',
-        'retrieval_siamese_weights': '0013.pth',
-        'retrieval_triplet_weights': '0017.pth',
+        'retrieval_siamese_weights': '0025.pth',
+        'retrieval_triplet_weights': '0027.pth',
         'get_images': lambda x: x.labels,
         'get_image': lambda x: x,
         'get_label': lambda x: x['label'],
@@ -38,8 +38,8 @@ datasets = {
         'transform': GERMAN_TRANSFORM,
         'dataset': GermanTrafficSignDatasetAbs(train=True),
         'class_weights': '0004.pth',
-        'retrieval_siamese_weights': '0005.pth',
-        'retrieval_triplet_weights': '0018.pth',
+        'retrieval_siamese_weights': '0001.pth',
+        'retrieval_triplet_weights': '0002.pth',
         'get_images': lambda x: x.img_labels.values,
         'get_image': lambda x: x[-1],
         'get_label': lambda x: GERMAN_CLASSES[x[-2]],
@@ -48,13 +48,13 @@ datasets = {
             img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
             if retr_img.split('__')[-1] in img[-1]
         ][0],
-        'get_crosswalk_label': lambda: ''
+        'get_crosswalk_label': lambda: 'Pedestrians'
     },
     'unknown': {
         'transform': UNKNOWN_TRANSFORM,
         'dataset': UnknownDatasetAbs(train=True),
         'class_weights': '0020.pth',
-        'retrieval_siamese_weights': '0016.pth',
+        'retrieval_siamese_weights': '0011.pth',
         'retrieval_triplet_weights': '0014.pth',
         'get_images': lambda x: x.labels,
         'get_image': lambda x: x,

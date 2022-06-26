@@ -4,7 +4,7 @@ from torchvision.models.resnet import ResNet, BasicBlock
 
 
 class PreTrainedRoadSignNet(nn.Module):
-    def __init__(self, weights='weights/ClassificationWeights/weightsNoSoftmax3layers.pth'):
+    def __init__(self, weights='weigths/ClassificationWeights/weightsNoSoftmax3layers.pth'):
         super().__init__()
         self.load_state_dict(torch.load(weights))
         self.eval()

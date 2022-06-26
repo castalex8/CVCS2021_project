@@ -11,8 +11,7 @@ from road_signs.cnn.RoadSignNetFC import get_road_sign_fc
 from road_signs.loss.ConstrastiveLoss import ContrastiveLoss
 from road_signs.train.Siamese import train_epoch, test_epoch
 from road_signs.utils.train import fit
-from road_signs.utils.Const import BS, MARGIN, INIT_LR, STEP_SIZE, GAMMA, NUM_EPOCHS
-
+from road_signs.utils.Const import BS, MARGIN, INIT_LR, STEP_SIZE, GAMMA, NUM_EPOCHS, MOMENTUM
 
 if __name__ == '__main__':
     cuda = torch.cuda.is_available()
@@ -38,4 +37,4 @@ if __name__ == '__main__':
     scheduler = lr_scheduler.StepLR(optim, step_size=STEP_SIZE, gamma=GAMMA)
 
     fit(train_loader, test_loader, model_conv, loss_fn, optim, NUM_EPOCHS, cuda, train_epoch, test_epoch, 'pretrained_siamese.txt', scheduler)
-    torch.save(model_conv.state_dict(), '../../weights/Mapillary/preTrainedSiamese.pth')
+    torch.save(model_conv.state_dict(), '../../weigths/Mapillary/preTrainedSiamese.pth')

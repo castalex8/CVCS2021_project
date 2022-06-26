@@ -7,8 +7,8 @@ class GermanTrafficSignDatasetRetr(GermanTrafficSignDatasetAbs):
         self.img_classes = [[] for _ in range(len(CLASSES))]
 
         # Add to each class the relative images' path loading the complete dataset
-        for val in self.img_labels.values:
-            self.img_classes[val[-2]].append(val[-1])
+        for i in range(len(self.img_labels)):
+            self.img_classes[self.img_labels.iloc[i].ClassId].append(self.img_labels.iloc[i])
 
     def __getitem__(self, index: int):
         raise NotImplemented
