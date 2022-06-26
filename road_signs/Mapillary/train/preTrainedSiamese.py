@@ -37,4 +37,4 @@ if __name__ == '__main__':
     scheduler = lr_scheduler.StepLR(optim, step_size=STEP_SIZE, gamma=GAMMA)
 
     fit(train_loader, test_loader, model_conv, loss_fn, optim, NUM_EPOCHS, cuda, train_epoch, test_epoch, 'pretrained_siamese.txt', scheduler)
-    torch.save(model_conv.state_dict(), '../../weigths/Mapillary/preTrainedSiamese.pth')
+    torch.save(model_conv.state_dict(), '../../weights/Mapillary/preTrainedSiamese.pth')

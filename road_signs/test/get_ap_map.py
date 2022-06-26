@@ -132,14 +132,14 @@ def evaluate_german_triplet():
 
 
 def main():
-    evaluate_mapillary_siamese()
-    evaluate_mapillary_triplet()
-
-    evaluate_unknown_siamese()
-    evaluate_unknown_triplet()
+    # evaluate_mapillary_siamese()
+    # evaluate_mapillary_triplet()
+    #
+    # evaluate_unknown_siamese()
+    # evaluate_unknown_triplet()
 
     evaluate_german_siamese()
-    evaluate_german_triplet()
+    # evaluate_german_triplet()
 
 
 if __name__ == '__main__':

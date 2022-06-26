@@ -15,7 +15,7 @@ model.load_state_dict(torch.load(get_weights('retrieval_siamese'), map_location=
 #     param.requires_grad = False
 #
 # model_conv.fc = get_road_sign_fc()
-# model_conv.load_state_dict(torch.load('/home/corra/CVCS2021_project/road_signs/weigths/0022.pth', map_location=torch.device('cpu')))
+# model_conv.load_state_dict(torch.load('/home/corra/CVCS2021_project/road_signs/weights/0022.pth', map_location=torch.device('cpu')))
 # model = model_conv
 
 model.to(device)

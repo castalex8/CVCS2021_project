@@ -1,0 +1,23 @@
+Dataset,Network,Epochs,Layers Conv,Pretrained,Filename
+German,Siamese,10,5,false,0001.pth
+German,Triplet,10,5,false,0002.pth
+German,Classification,30,3,false,0004.pth
+German,Siamese,10,3,false,0005.pth
+German,Siamese,20,3,false,0007.pth
+Unknown,Siamese,20,3,false,0008.pth
+Unknown,Siamese,30,3,false,0009.pth
+Mapillary,Siamese,10,3,false,0010.pth
+Unknown,Classification,20,3,false,0011.pth
+Mapillary,Classification,20,3,false,0012.pth
+Mapillary,Siamese,10,3,false,0013.pth
+Unknown,Triplet,10,3,false,0014.pth
+Mapillary,Siamese,10,-,true,0015.pth
+Unknown,Siamese,15,3,false,0016.pth
+Mapillary,Triplet,7,3,false,0017.pth
+German,Triplet,10,3,false,0018.pth
+Unknown,Classification,40,3,false,0020.pth
+Unknown,Classification,30,3,false,0021.pth
+Mapillary,Triplet,10,-,true,0024.pth
+Mapillary,Siamese,7,-,true,0025.pth
+Mapillary,Triplet,7,-,true,0026.pth
+Mapillary,Triplet,5,3,false,0027.pth

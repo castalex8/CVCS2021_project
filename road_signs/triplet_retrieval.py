@@ -19,7 +19,7 @@ model.to(device)
 #     param.requires_grad = False
 #
 # model.fc = get_road_sign_fc()
-# model.load_state_dict(torch.load('/home/corra/CVCS2021_project/road_signs/weigths/0022.pth', map_location=torch.device('cpu')))
+# model.load_state_dict(torch.load('/home/corra/CVCS2021_project/road_signs/weights/0022.pth', map_location=torch.device('cpu')))
 
 loss_fn.to(device)
 model.eval()
