@@ -1,0 +1,40 @@
+26)
+TOT = 480
+P = 32	N = 448
+TP = 16	TN = 436
+FP = 12	FN = 16
+Precision = 0.57	Recall = 0.50
+Sensitivity|TPR = 0.50	Specificity|TNR = 0.97
+G-mean = 0.70	F1 = 0.53
+Accuracy = 0.94
+----------------------------------------
+05) 
+TOT = 480
+P = 6	N = 474
+TP = 4	TN = 474
+FP = 0	FN = 2
+Precision = 1.00	Recall = 0.67
+Sensitivity|TPR = 0.67	Specificity|TNR = 1.00
+G-mean = 0.82	F1 = 0.80
+Accuracy = 1.00
+-----------------------------------------
+06)
+TOT = 480
+P = 109	N = 371
+TP = 58	TN = 285
+FP = 86	FN = 51
+Precision = 0.40	Recall = 0.53
+Sensitivity|TPR = 0.53	Specificity|TNR = 0.77
+G-mean = 0.64	F1 = 0.46
+Accuracy = 0.71
+------------------------------------------
+35)
+TOT = 480
+P = 73	N = 407
+TP = 30	TN = 403
+FP = 4	FN = 43
+Precision = 0.88	Recall = 0.41
+Sensitivity|TPR = 0.41	Specificity|TNR = 0.99
+G-mean = 0.64	F1 = 0.56
+Accuracy = 0.90
+-------------------------------------------
