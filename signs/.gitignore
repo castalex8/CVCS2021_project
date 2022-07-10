@@ -139,3 +139,12 @@ road_signs/retrieval_images
 road_signs/retrieval_embedding
 road_signs/test/sample_images
 street_view/output
+
+# Weights
+pedestrian/weights/
+
+# Annotations
+pedestrian/annotations/
+
+# Pycharm
+.idea/
