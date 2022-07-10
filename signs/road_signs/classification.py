@@ -2,8 +2,8 @@ import torch
 import torchvision
 from torch import Tensor
 
-from road_signs.cnn.RoadSignNet import RoadSignNet
-from road_signs.datasets_utils import get_dataset, get_weights, get_predicted_class, get_formatted_image, get_device
+from signs.road_signs.cnn.RoadSignNet import RoadSignNet
+from signs.road_signs.datasets_utils import get_dataset, get_weights, get_predicted_class, get_formatted_image, get_device
 
 
 ds = get_dataset()

@@ -17,7 +17,7 @@ Mapillary,Triplet,7,3,false,0017.pth
 German,Triplet,10,3,false,0018.pth
 Unknown,Classification,40,3,false,0020.pth
 Unknown,Classification,30,3,false,0021.pth
-Mapillary,Triplet,10,-,true,0024.pth
+Mapillary,Triplet,10,-,false,0024.pth
 Mapillary,Siamese,7,-,true,0025.pth
 Mapillary,Triplet,7,-,true,0026.pth
 Mapillary,Triplet,5,3,false,0027.pth

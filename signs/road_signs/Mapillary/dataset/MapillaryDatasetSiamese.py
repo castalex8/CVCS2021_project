@@ -2,8 +2,8 @@ from typing import Tuple
 
 import torchvision
 
-from road_signs.Mapillary.dataset.MapillaryDatasetRetr import MapillaryDatasetRetr
-from road_signs.utils.create_ds import create_test_pairs, create_online_training_couple
+from signs.road_signs.Mapillary.dataset.MapillaryDatasetRetr import MapillaryDatasetRetr
+from signs.road_signs.utils.create_ds import create_test_pairs, create_online_training_couple
 
 
 class MapillarySiamese(MapillaryDatasetRetr):

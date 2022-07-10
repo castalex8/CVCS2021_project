@@ -2,8 +2,8 @@ from typing import Tuple, List
 
 import torchvision
 
-from road_signs.Unknown.dataset.UnknownDatasetRetr import UnknownDatasetRetr
-from road_signs.utils.create_ds import create_test_triplets, create_online_training_triplet
+from signs.road_signs.Unknown.dataset.UnknownDatasetRetr import UnknownDatasetRetr
+from signs.road_signs.utils.create_ds import create_test_triplets, create_online_training_triplet
 
 
 class UnknownDatasetTriplet(UnknownDatasetRetr):

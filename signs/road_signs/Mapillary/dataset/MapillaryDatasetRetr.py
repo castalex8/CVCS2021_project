@@ -1,7 +1,7 @@
 from collections import defaultdict
 from copy import deepcopy
 
-from road_signs.Mapillary.dataset.MapillaryDatasetAbs import MapillaryDatasetAbs
+from signs.road_signs.Mapillary.dataset.MapillaryDatasetAbs import MapillaryDatasetAbs
 
 
 class MapillaryDatasetRetr(MapillaryDatasetAbs):

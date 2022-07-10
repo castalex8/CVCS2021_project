@@ -1,8 +1,8 @@
 from torch.utils.data import DataLoader
 
-from road_signs.German.dataset.GermanTrafficSignDatasetTriplet import GermanTrafficSignDatasetTriplet
-from road_signs.utils.Const import BS, use_lab
-from road_signs.utils.train import train_triplet
+from signs.road_signs.German.dataset.GermanTrafficSignDatasetTriplet import GermanTrafficSignDatasetTriplet
+from signs.road_signs.utils.Const import BS, use_lab
+from signs.road_signs.utils.train import train_triplet
 
 
 if __name__ == '__main__':

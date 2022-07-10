@@ -1,5 +1,5 @@
 import torch.nn as nn
-from road_signs.cnn.RoadSignNet import RoadSignNet
+from signs.road_signs.cnn.RoadSignNet import RoadSignNet
 
 
 class TripletNet(nn.Module):

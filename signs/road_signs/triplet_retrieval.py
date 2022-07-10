@@ -1,10 +1,7 @@
-import cv2
 from torch.nn import PairwiseDistance
-from torchvision.transforms import transforms
 
-from road_signs.cnn.RoadSignNetFC import get_road_sign_fc
-from road_signs.cnn.TripletNet import TripletNet
-from road_signs.datasets_utils import *
+from signs.road_signs.cnn.TripletNet import TripletNet
+from signs.road_signs.datasets_utils import *
 
 ds = get_dataset()
 device = get_device()
@@ -14,6 +11,7 @@ model = TripletNet()
 model.load_state_dict(torch.load(get_weights('retrieval_triplet'), map_location=torch.device(device.type)))
 model.to(device)
 
+# Uncomment this section to run the pretrained model
 # model = torchvision.models.resnet18(pretrained=True)
 # for param in model.parameters():
 #     param.requires_grad = False
@@ -32,21 +30,22 @@ def get_embedding_from_img(img1: torchvision.io.image, img2: torchvision.io.imag
     return model(img1, img2, img3)
 
 
-def get_embedding_from_img_path(img1: torchvision.io.image, img2: torchvision.io.image, img3: torchvision.io.image):
+def get_embedding_from_img_path(img1: torchvision.io.image, img2: torchvision.io.image, img3: torchvision.io.image, dataset: str):
     # Unknown dataset
-    # img1 = ds['transform'](transforms.ToTensor()(cv2.imread(img1)[:, :, :3])).reshape([1, 3, 32, 32])
-    # img2 = ds['transform'](transforms.ToTensor()(cv2.imread(img2)[:, :, :3])).reshape([1, 3, 32, 32])
-    # img3 = ds['transform'](transforms.ToTensor()(cv2.imread(img3)[:, :, :3])).reshape([1, 3, 32, 32])
-
-    # Mapillary
-    img1 = ds['transform'](torchvision.io.read_image(img1).float()).reshape([1, 3, 32, 32])
-    img2 = ds['transform'](torchvision.io.read_image(img2).float()).reshape([1, 3, 32, 32])
-    img3 = ds['transform'](torchvision.io.read_image(img3).float()).reshape([1, 3, 32, 32])
+    if dataset == 'unknown':
+        img1 = ds['transform'](transforms.ToTensor()(cv2.imread(img1)[:, :, :3])).reshape([1, 3, 32, 32])
+        img2 = ds['transform'](transforms.ToTensor()(cv2.imread(img2)[:, :, :3])).reshape([1, 3, 32, 32])
+        img3 = ds['transform'](transforms.ToTensor()(cv2.imread(img3)[:, :, :3])).reshape([1, 3, 32, 32])
+    else:
+        # Mapillary and German
+        img1 = ds['transform'](torchvision.io.read_image(img1).float()).reshape([1, 3, 32, 32])
+        img2 = ds['transform'](torchvision.io.read_image(img2).float()).reshape([1, 3, 32, 32])
+        img3 = ds['transform'](torchvision.io.read_image(img3).float()).reshape([1, 3, 32, 32])
 
     return get_embedding_from_img(img1, img2, img3)
 
 
-def retrieve_triplet_top_n_results(img: torchvision.io.image, max_results: int = 10) -> List[dict]:
+def retrieve_triplet_top_n_results(img: torchvision.io.image, dataset: str, max_results: int = 10) -> List[dict]:
     formatted_img = get_formatted_image(img)
     retrieval_images = get_retrieval_images()
     img_embedding, _, _ = get_embedding_from_img(formatted_img, formatted_img, formatted_img)
@@ -58,37 +57,32 @@ def retrieve_triplet_top_n_results(img: torchvision.io.image, max_results: int =
         if i >= len(retrieval_images) - 2:
             if i == len(retrieval_images) - 1:
                 retr_img = retrieval_images[i]
-                retr_embedding1, _, _ = get_embedding_from_img_path(retr_img, retr_img, retr_img)
+                retr_embedding1, _, _ = get_embedding_from_img_path(retr_img, retr_img, retr_img, dataset)
                 losses = update_losses(
                     # loss_fn(img_embedding, retr_embedding1), losses, max_results, ds['get_image_from_path'](retr_img)
                     loss_fn(img_embedding, retr_embedding1), losses, max_results, retr_img
                 )
             else:
                 retr_embedding1, retr_embedding2, _ = get_embedding_from_img_path(
-                    retrieval_images[i], retrieval_images[i + 1], retrieval_images[i + 1]
+                    retrieval_images[i], retrieval_images[i + 1], retrieval_images[i + 1], dataset
                 )
                 losses = update_losses(
-                    # loss_fn(img_embedding, retr_embedding1), losses, max_results, ds['get_image_from_path'](retrieval_images[i])
                     loss_fn(img_embedding, retr_embedding1), losses, max_results, retrieval_images[i]
                 )
                 losses = update_losses(
-                    # loss_fn(img_embedding, retr_embedding2), losses, max_results, ds['get_image_from_path'](retrieval_images[i + 1])
                     loss_fn(img_embedding, retr_embedding2), losses, max_results, retrieval_images[i + 1]
                 )
         else:
             retr_embedding1, retr_embedding2, retr_embedding3 = get_embedding_from_img_path(
-                retrieval_images[i], retrieval_images[i + 1], retrieval_images[i + 2]
+                retrieval_images[i], retrieval_images[i + 1], retrieval_images[i + 2], dataset
             )
             losses = update_losses(
-                # loss_fn(img_embedding, retr_embedding1), losses, max_results, ds['get_image_from_path'](retrieval_images[i])
                 loss_fn(img_embedding, retr_embedding1), losses, max_results, retrieval_images[i]
             )
             losses = update_losses(
-                # loss_fn(img_embedding, retr_embedding2), losses, max_results, ds['get_image_from_path'](retrieval_images[i + 1])
                 loss_fn(img_embedding, retr_embedding2), losses, max_results, retrieval_images[i + 1]
             )
             losses = update_losses(
-                # loss_fn(img_embedding, retr_embedding3), losses, max_results, ds['get_image_from_path'](retrieval_images[i + 2])
                 loss_fn(img_embedding, retr_embedding3), losses, max_results, retrieval_images[i + 2]
             )
 

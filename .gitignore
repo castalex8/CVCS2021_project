@@ -129,15 +129,16 @@ dmypy.json
 .pyre/
 
 
-road_signs/gtsrb-german-traffic-sign
-road_signs/results
-road_signs/siamese_triplet
-road_signs/all_weights_backups
+signs/gtsrb-german-traffic-sign
+signs/results
+signs/siamese_triplet
+signs/all_weights_backups
 pedestrian/annotations
 pedestrian/weights
-road_signs/retrieval_images
-road_signs/retrieval_embedding
-road_signs/test/sample_images
+signs/retrieval_images/siamese/*
+signs/retrieval_images/triplet/*
+signs/retrieval_embedding/*
+signs/test/sample_images
 street_view/output
 
 # Weights

@@ -1,6 +1,6 @@
 import torchvision
 
-from road_signs.Unknown.dataset.UnknownDatasetAbs import UnknownDatasetAbs, CLASSES
+from signs.road_signs.Unknown.dataset.UnknownDatasetAbs import UnknownDatasetAbs, CLASSES
 
 
 class UnknownClass(UnknownDatasetAbs):

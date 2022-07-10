@@ -9,8 +9,7 @@ import pandas as pd
 import torchvision
 from cv2 import cv2
 
-from road_signs.Mapillary.dataset.MapillaryDatasetAbs import CLASSES as MAPILLARY_CLASSES, NUM_SAMPLES
-from road_signs.German.dataset.GermanTrafficSignDatasetAbs import CLASSES as GERMAN_CLASSES
+from signs.road_signs.Mapillary.dataset.MapillaryDatasetAbs import CLASSES as MAPILLARY_CLASSES
 
 NUMBER_PICTURES = 20
 GERMAN_PATH = os.getenv('GERMAN_BASE_DIR')
@@ -23,7 +22,7 @@ RETRIEVAL_IMAGES_DIR = os.getenv('RETRIEVAL_IMAGES_DIR')
 def clean_ds():
     for folder in ['german', 'unknown', 'mapillary']:
         if pathlib.Path(folder).exists():
-            shutil.rmtree(os.path.join(RETRIEVAL_IMAGES_DIR, folder))
+            shutil.rmtree(os.path.join(RETRIEVAL_IMAGES_DIR, folder + '.eval'))
 
 
 def exists_or_create(ds: str):
@@ -116,8 +115,8 @@ def create_mapillary_ds():
 
 def main():
     # clean_ds()
-    # create_german_ds()
-    # create_unknown_ds()
+    create_german_ds()
+    create_unknown_ds()
     create_mapillary_ds()
 
 

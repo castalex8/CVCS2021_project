@@ -10,9 +10,9 @@ import torchvision
 from torchvision.io import read_image
 from torchvision.transforms import transforms
 
-from road_signs.datasets_utils import get_formatted_image
-from road_signs.siamese_retrieval import get_embedding_from_img as get_siamese_embedding
-from road_signs.triplet_retrieval import get_embedding_from_img as get_triplet_embedding
+from signs.road_signs.datasets_utils import get_formatted_image
+from signs.road_signs.siamese_retrieval import get_embedding_from_img as get_siamese_embedding
+from signs.road_signs.triplet_retrieval import get_embedding_from_img as get_triplet_embedding
 
 NUMBER_PICTURES = 20
 

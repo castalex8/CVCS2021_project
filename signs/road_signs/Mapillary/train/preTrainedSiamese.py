@@ -6,12 +6,12 @@ from torch import optim
 from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 
-from road_signs.Mapillary.dataset.MapillaryDatasetSiamese import MapillarySiamese
-from road_signs.cnn.RoadSignNetFC import get_road_sign_fc
-from road_signs.loss.ConstrastiveLoss import ContrastiveLoss
-from road_signs.train.Siamese import train_epoch, test_epoch
-from road_signs.utils.train import fit
-from road_signs.utils.Const import BS, MARGIN, INIT_LR, STEP_SIZE, GAMMA, NUM_EPOCHS, MOMENTUM
+from signs.road_signs.Mapillary.dataset.MapillaryDatasetSiamese import MapillarySiamese
+from signs.road_signs.cnn.RoadSignNetFC import get_road_sign_fc
+from signs.road_signs.loss.ConstrastiveLoss import ContrastiveLoss
+from signs.road_signs.train.Siamese import train_epoch, test_epoch
+from signs.road_signs.utils.train import fit
+from signs.road_signs.utils.Const import BS, MARGIN, INIT_LR, STEP_SIZE, GAMMA, NUM_EPOCHS, MOMENTUM
 
 if __name__ == '__main__':
     cuda = torch.cuda.is_available()

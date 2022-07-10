@@ -3,7 +3,7 @@ from typing import Tuple, List
 import numpy as np
 import torchvision
 
-from road_signs.German.dataset.GermanTrafficSignDatasetRetr import GermanTrafficSignDatasetRetr
+from signs.road_signs.German.dataset.GermanTrafficSignDatasetRetr import GermanTrafficSignDatasetRetr
 
 
 class GermanTrafficSignDatasetTriplet(GermanTrafficSignDatasetRetr):

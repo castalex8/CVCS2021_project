@@ -7,11 +7,11 @@ from torch.nn import PairwiseDistance
 from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 
-from road_signs.Mapillary.dataset.MapillaryDatasetTriplet import MapillaryDatasetTriplet
-from road_signs.cnn.RoadSignNetFC import get_road_sign_fc
-from road_signs.train.Triplet import train_epoch, test_epoch
-from road_signs.utils.train import fit
-from road_signs.utils.Const import BS, MARGIN, INIT_LR, STEP_SIZE, GAMMA, NUM_EPOCHS
+from signs.road_signs.Mapillary.dataset.MapillaryDatasetTriplet import MapillaryDatasetTriplet
+from signs.road_signs.cnn.RoadSignNetFC import get_road_sign_fc
+from signs.road_signs.train.Triplet import train_epoch, test_epoch
+from signs.road_signs.utils.train import fit
+from signs.road_signs.utils.Const import BS, MARGIN, INIT_LR, STEP_SIZE, GAMMA, NUM_EPOCHS
 
 
 if __name__ == '__main__':

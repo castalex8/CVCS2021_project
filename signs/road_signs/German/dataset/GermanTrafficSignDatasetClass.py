@@ -3,7 +3,7 @@ from typing import Tuple
 
 import torchvision
 
-from road_signs.German.dataset.GermanTrafficSignDatasetAbs import GermanTrafficSignDatasetAbs
+from signs.road_signs.German.dataset.GermanTrafficSignDatasetAbs import GermanTrafficSignDatasetAbs
 
 
 class GermanTrafficSignDatasetClass(GermanTrafficSignDatasetAbs):

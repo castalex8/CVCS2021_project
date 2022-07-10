@@ -1,19 +1,21 @@
 import os
 from typing import List
 
+import cv2
 import torch
 import torchvision
+from torchvision import transforms
 
-from road_signs.German.dataset.GermanTrafficSignDatasetAbs import TRANSFORMS as GERMAN_TRANSFORM, \
+from signs.road_signs.German.dataset.GermanTrafficSignDatasetAbs import TRANSFORMS as GERMAN_TRANSFORM, \
     GermanTrafficSignDatasetAbs, CLASSES as GERMAN_CLASSES
-from road_signs.Mapillary.dataset.MapillaryDatasetAbs import CLASSES as MAPILLARY_CLASSES, MapillaryDatasetAbs
-from road_signs.Mapillary.dataset.MapillaryDatasetAbs import TRANSFORMS as MAPILLARY_TRANSFORM
-from road_signs.Unknown.dataset.UnknownDatasetAbs import CLASSES as UNKNOWN_CLASSES
-from road_signs.Unknown.dataset.UnknownDatasetAbs import TRANSFORMS as UNKNOWN_TRANSFORM, UnknownDatasetAbs
+from signs.road_signs.Mapillary.dataset.MapillaryDatasetAbs import CLASSES as MAPILLARY_CLASSES, MapillaryDatasetAbs
+from signs.road_signs.Mapillary.dataset.MapillaryDatasetAbs import TRANSFORMS as MAPILLARY_TRANSFORM
+from signs.road_signs.Unknown.dataset.UnknownDatasetAbs import CLASSES as UNKNOWN_CLASSES
+from signs.road_signs.Unknown.dataset.UnknownDatasetAbs import TRANSFORMS as UNKNOWN_TRANSFORM, UnknownDatasetAbs
 
 TEST_IMG = 'pedestrian-1.jpg'
 DATASET = os.getenv('DATASET')
-RETRIEVAL_IMAGES_DIR = os.path.join(os.getenv('RETRIEVAL_IMAGES_DIR'), DATASET + '.eval')
+RETRIEVAL_IMAGES_DIR = os.path.join(os.getenv('RETRIEVAL_IMAGES_DIR'), DATASET + '.eval') if DATASET is not None else None
 WEIGHTS_DIR = os.path.join(os.getenv('WEIGHTS_DIR'))
 
 
@@ -22,8 +24,8 @@ datasets = {
         'transform': MAPILLARY_TRANSFORM,
         'dataset': MapillaryDatasetAbs(train=True),
         'class_weights': '0021.pth',
-        'retrieval_siamese_weights': '0025.pth',
-        'retrieval_triplet_weights': '0027.pth',
+        'retrieval_siamese_weights': '0013.pth',
+        'retrieval_triplet_weights': '0024.pth',
         'get_images': lambda x: x.labels,
         'get_image': lambda x: x,
         'get_label': lambda x: x['label'],

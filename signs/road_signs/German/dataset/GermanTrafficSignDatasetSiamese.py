@@ -4,8 +4,8 @@ import numpy as np
 import torchvision
 import pandas as pd
 
-from road_signs.German.dataset.GermanTrafficSignDatasetAbs import CLASSES
-from road_signs.German.dataset.GermanTrafficSignDatasetRetr import GermanTrafficSignDatasetRetr
+from signs.road_signs.German.dataset.GermanTrafficSignDatasetAbs import CLASSES
+from signs.road_signs.German.dataset.GermanTrafficSignDatasetRetr import GermanTrafficSignDatasetRetr
 
 
 class GermanTrafficSignDatasetSiamese(GermanTrafficSignDatasetRetr):

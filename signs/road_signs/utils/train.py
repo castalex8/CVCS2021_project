@@ -7,14 +7,14 @@ from torch.nn import TripletMarginWithDistanceLoss, PairwiseDistance, CrossEntro
 from torch.optim import lr_scheduler, SGD
 from torch.utils.data import DataLoader
 
-from road_signs.cnn.RoadSignNet import RoadSignNet
-from road_signs.cnn.SiameseNet import SiameseNet
-from road_signs.cnn.TripletNet import TripletNet
-from road_signs.loss.ConstrastiveLoss import ContrastiveLoss
-from road_signs.train.Triplet import train_epoch as triplet_train_epoch, test_epoch as triplet_test_epoch
-from road_signs.train.Siamese import train_epoch as siamese_train_epoch, test_epoch as siamese_test_epoch
-from road_signs.train.Classification import train as class_train, test as class_test
-from road_signs.utils.Const import MARGIN, GAMMA, NUM_EPOCHS, STEP_SIZE, INIT_LR, MOMENTUM
+from signs.road_signs.cnn.RoadSignNet import RoadSignNet
+from signs.road_signs.cnn.SiameseNet import SiameseNet
+from signs.road_signs.cnn.TripletNet import TripletNet
+from signs.road_signs.loss.ConstrastiveLoss import ContrastiveLoss
+from signs.road_signs.train.Triplet import train_epoch as triplet_train_epoch, test_epoch as triplet_test_epoch
+from signs.road_signs.train.Siamese import train_epoch as siamese_train_epoch, test_epoch as siamese_test_epoch
+from signs.road_signs.train.Classification import train as class_train, test as class_test
+from signs.road_signs.utils.Const import MARGIN, GAMMA, NUM_EPOCHS, STEP_SIZE, INIT_LR, MOMENTUM
 
 
 def fit(

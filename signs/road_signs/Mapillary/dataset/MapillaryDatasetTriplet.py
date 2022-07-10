@@ -1,5 +1,5 @@
-from road_signs.Mapillary.dataset.MapillaryDatasetRetr import MapillaryDatasetRetr
-from road_signs.utils.create_ds import create_test_triplets, create_online_training_triplet
+from signs.road_signs.Mapillary.dataset.MapillaryDatasetRetr import MapillaryDatasetRetr
+from signs.road_signs.utils.create_ds import create_test_triplets, create_online_training_triplet
 
 
 class MapillaryDatasetTriplet(MapillaryDatasetRetr):

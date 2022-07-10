@@ -1,4 +1,4 @@
-from road_signs.German.dataset.GermanTrafficSignDatasetAbs import GermanTrafficSignDatasetAbs, CLASSES
+from signs.road_signs.German.dataset.GermanTrafficSignDatasetAbs import GermanTrafficSignDatasetAbs, CLASSES
 
 
 class GermanTrafficSignDatasetRetr(GermanTrafficSignDatasetAbs):

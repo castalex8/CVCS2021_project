@@ -1,8 +1,10 @@
-from road_signs.cnn.SiameseNet import SiameseNet
-from road_signs.datasets_utils import *
-from road_signs.loss.ConstrastiveLoss import ContrastiveLoss
-from road_signs.utils.Const import MARGIN
+import cv2
+from torchvision import transforms
 
+from signs.road_signs.cnn.SiameseNet import SiameseNet
+from signs.road_signs.datasets_utils import *
+from signs.road_signs.loss.ConstrastiveLoss import ContrastiveLoss
+from signs.road_signs.utils.Const import MARGIN
 
 ds = get_dataset()
 model = SiameseNet()
@@ -10,13 +12,13 @@ device = get_device()
 loss_fn = ContrastiveLoss(margin=MARGIN)
 model.load_state_dict(torch.load(get_weights('retrieval_siamese'), map_location=torch.device(device.type)))
 
-# model_conv = torchvision.models.resnet18(pretrained=True)
+# Uncomment this section to run the pretrained model
+# model = torchvision.models.resnet18(pretrained=True)
 # for param in model_conv.parameters():
 #     param.requires_grad = False
 #
-# model_conv.fc = get_road_sign_fc()
-# model_conv.load_state_dict(torch.load('/home/corra/CVCS2021_project/road_signs/weights/0022.pth', map_location=torch.device('cpu')))
-# model = model_conv
+# model.fc = get_road_sign_fc()
+# model.load_state_dict(torch.load('/home/corra/CVCS2021_project/road_signs/weights/0022.pth', map_location=torch.device('cpu')))
 
 model.to(device)
 loss_fn.to(device)
@@ -33,15 +35,14 @@ def get_embedding_from_img(img1: torchvision.io.image, img2: torchvision.io.imag
 
 
 def get_embedding_from_img_path(img1: torchvision.io.image, img2: torchvision.io.image):
-    # img1 = get_image_from_path(ds, img1)
-    # img2 = get_image_from_path(ds, img2)
     # # Unknown dataset
-    # img1 = ds['transform'](transforms.ToTensor()(cv2.imread(img1)[:, :, :3])).reshape([1, 3, 32, 32])
-    # img2 = ds['transform'](transforms.ToTensor()(cv2.imread(img2)[:, :, :3])).reshape([1, 3, 32, 32])
-
-    # Mapillary dataset
-    img1 = ds['transform'](torchvision.io.read_image(img1).float()).reshape([1, 3, 32, 32])
-    img2 = ds['transform'](torchvision.io.read_image(img2).float()).reshape([1, 3, 32, 32])
+    if os.getenv('DATASET') == 'unknown':
+        img1 = ds['transform'](transforms.ToTensor()(cv2.imread(img1)[:, :, :3])).reshape([1, 3, 32, 32])
+        img2 = ds['transform'](transforms.ToTensor()(cv2.imread(img2)[:, :, :3])).reshape([1, 3, 32, 32])
+    else:
+        # Mapillary and German dataset
+        img1 = ds['transform'](torchvision.io.read_image(img1).float()).reshape([1, 3, 32, 32])
+        img2 = ds['transform'](torchvision.io.read_image(img2).float()).reshape([1, 3, 32, 32])
 
     return get_embedding_from_img(img1, img2)
 

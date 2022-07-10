@@ -1,6 +1,6 @@
 import torchvision.io
 
-from road_signs.Mapillary.dataset.MapillaryDatasetAbs import CLASSES, MapillaryDatasetAbs
+from signs.road_signs.Mapillary.dataset.MapillaryDatasetAbs import CLASSES, MapillaryDatasetAbs
 
 
 class MapillaryClass(MapillaryDatasetAbs):

@@ -1,9 +1,9 @@
 from torch.utils.data import DataLoader
 
-from road_signs.Unknown.dataset.UnknownDatasetAbs import CLASSES
-from road_signs.Unknown.dataset.UnknownDatasetClass import UnknownClass
-from road_signs.utils.Const import BS, use_lab
-from road_signs.utils.train import train_classification
+from signs.road_signs.Unknown.dataset.UnknownDatasetAbs import CLASSES
+from signs.road_signs.Unknown.dataset.UnknownDatasetClass import UnknownClass
+from signs.road_signs.utils.Const import BS, use_lab
+from signs.road_signs.utils.train import train_classification
 
 
 if __name__ == '__main__':

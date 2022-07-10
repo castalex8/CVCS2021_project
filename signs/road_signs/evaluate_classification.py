@@ -1,15 +1,15 @@
 import torch
 from torch.utils.data import DataLoader
 
-from road_signs.German.dataset.GermanTrafficSignDatasetAbs import CLASSES as GERMAN_CLASSES
-from road_signs.German.dataset.GermanTrafficSignDatasetClass import GermanTrafficSignDatasetClass
-from road_signs.Mapillary.dataset.MapillaryDatasetAbs import CLASSES as MAPILLARY_CLASSES
-from road_signs.Mapillary.dataset.MapillaryDatasetClass import MapillaryClass
-from road_signs.Unknown.dataset.UnknownDatasetAbs import CLASSES as UNKNOWN_CLASSES
-from road_signs.Unknown.dataset.UnknownDatasetClass import UnknownClass
-from road_signs.cnn.RoadSignNet import RoadSignNet
-from road_signs.train.Classification import test_pedestrian
-from road_signs.utils.Const import BS
+from signs.road_signs.German.dataset.GermanTrafficSignDatasetAbs import CLASSES as GERMAN_CLASSES
+from signs.road_signs.German.dataset.GermanTrafficSignDatasetClass import GermanTrafficSignDatasetClass
+from signs.road_signs.Mapillary.dataset.MapillaryDatasetAbs import CLASSES as MAPILLARY_CLASSES
+from signs.road_signs.Mapillary.dataset.MapillaryDatasetClass import MapillaryClass
+from signs.road_signs.Unknown.dataset.UnknownDatasetAbs import CLASSES as UNKNOWN_CLASSES
+from signs.road_signs.Unknown.dataset.UnknownDatasetClass import UnknownClass
+from signs.road_signs.cnn.RoadSignNet import RoadSignNet
+from signs.road_signs.train.Classification import test_pedestrian
+from signs.road_signs.utils.Const import BS
 
 
 def evaluate_mapillary_class(weigths: str):

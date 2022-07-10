@@ -1,12 +1,12 @@
 import os
 from typing import List
 
-from road_signs.German.dataset.GermanTrafficSignDatasetAbs import GermanTrafficSignDatasetAbs, CLASSES as GERMAN_CLASSES
-from road_signs.Mapillary.dataset.MapillaryDatasetAbs import MapillaryDatasetAbs
-from road_signs.Unknown.dataset.UnknownDatasetAbs import UnknownDatasetAbs
-from road_signs.datasets_utils import get_dataset
-from road_signs.siamese_retrieval import retrieve_siamese_top_n_results
-from road_signs.triplet_retrieval import retrieve_triplet_top_n_results
+from signs.road_signs.German.dataset.GermanTrafficSignDatasetAbs import GermanTrafficSignDatasetAbs, CLASSES as GERMAN_CLASSES
+from signs.road_signs.Mapillary.dataset.MapillaryDatasetAbs import MapillaryDatasetAbs
+from signs.road_signs.Unknown.dataset.UnknownDatasetAbs import UnknownDatasetAbs
+from signs.road_signs.datasets_utils import get_dataset
+from signs.road_signs.siamese_retrieval import retrieve_siamese_top_n_results
+from signs.road_signs.triplet_retrieval import retrieve_triplet_top_n_results
 
 ds = get_dataset()
 SAMPLE_IMAGES_FOLDER = os.getenv('SAMPLE_IMAGES_FOLDER')
@@ -132,14 +132,15 @@ def evaluate_german_triplet():
 
 
 def main():
-    # evaluate_mapillary_siamese()
-    # evaluate_mapillary_triplet()
-    #
-    # evaluate_unknown_siamese()
-    # evaluate_unknown_triplet()
-
-    evaluate_german_siamese()
-    # evaluate_german_triplet()
+    if os.environ['DATASET'] == 'mapillary':
+        evaluate_mapillary_siamese()
+        evaluate_mapillary_triplet()
+    elif os.environ['DATASET'] == 'unknown':
+        evaluate_unknown_siamese()
+        evaluate_unknown_triplet()
+    elif os.environ['DATASET'] == 'german':
+        evaluate_german_siamese()
+        evaluate_german_triplet()
 
 
 if __name__ == '__main__':
