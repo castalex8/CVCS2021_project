@@ -30,9 +30,9 @@ def get_embedding_from_img(img1: torchvision.io.image, img2: torchvision.io.imag
     return model(img1, img2, img3)
 
 
-def get_embedding_from_img_path(img1: torchvision.io.image, img2: torchvision.io.image, img3: torchvision.io.image, dataset: str):
-    # Unknown dataset
-    if dataset == 'unknown':
+def get_embedding_from_img_path(img1: torchvision.io.image, img2: torchvision.io.image, img3: torchvision.io.image):
+    if os.getenv('DATASET') == 'unknown':
+        # Unknown dataset
         img1 = ds['transform'](transforms.ToTensor()(cv2.imread(img1)[:, :, :3])).reshape([1, 3, 32, 32])
         img2 = ds['transform'](transforms.ToTensor()(cv2.imread(img2)[:, :, :3])).reshape([1, 3, 32, 32])
         img3 = ds['transform'](transforms.ToTensor()(cv2.imread(img3)[:, :, :3])).reshape([1, 3, 32, 32])
@@ -45,7 +45,7 @@ def get_embedding_from_img_path(img1: torchvision.io.image, img2: torchvision.io
     return get_embedding_from_img(img1, img2, img3)
 
 
-def retrieve_triplet_top_n_results(img: torchvision.io.image, dataset: str, max_results: int = 10) -> List[dict]:
+def retrieve_triplet_top_n_results(img: torchvision.io.image, max_results: int = 10) -> List[dict]:
     formatted_img = get_formatted_image(img)
     retrieval_images = get_retrieval_images()
     img_embedding, _, _ = get_embedding_from_img(formatted_img, formatted_img, formatted_img)
@@ -57,14 +57,13 @@ def retrieve_triplet_top_n_results(img: torchvision.io.image, dataset: str, max_
         if i >= len(retrieval_images) - 2:
             if i == len(retrieval_images) - 1:
                 retr_img = retrieval_images[i]
-                retr_embedding1, _, _ = get_embedding_from_img_path(retr_img, retr_img, retr_img, dataset)
+                retr_embedding1, _, _ = get_embedding_from_img_path(retr_img, retr_img, retr_img)
                 losses = update_losses(
-                    # loss_fn(img_embedding, retr_embedding1), losses, max_results, ds['get_image_from_path'](retr_img)
                     loss_fn(img_embedding, retr_embedding1), losses, max_results, retr_img
                 )
             else:
                 retr_embedding1, retr_embedding2, _ = get_embedding_from_img_path(
-                    retrieval_images[i], retrieval_images[i + 1], retrieval_images[i + 1], dataset
+                    retrieval_images[i], retrieval_images[i + 1], retrieval_images[i + 1]
                 )
                 losses = update_losses(
                     loss_fn(img_embedding, retr_embedding1), losses, max_results, retrieval_images[i]
@@ -74,7 +73,7 @@ def retrieve_triplet_top_n_results(img: torchvision.io.image, dataset: str, max_
                 )
         else:
             retr_embedding1, retr_embedding2, retr_embedding3 = get_embedding_from_img_path(
-                retrieval_images[i], retrieval_images[i + 1], retrieval_images[i + 2], dataset
+                retrieval_images[i], retrieval_images[i + 1], retrieval_images[i + 2]
             )
             losses = update_losses(
                 loss_fn(img_embedding, retr_embedding1), losses, max_results, retrieval_images[i]

@@ -48,10 +48,10 @@ def train_triplet(train_loader: DataLoader, test_loader: DataLoader, is_double: 
     loss_fn.to(device)
 
     fit(
-        train_loader, test_loader, model, loss_fn, optimizer, 5, cuda, triplet_train_epoch,
+        train_loader, test_loader, model, loss_fn, optimizer, NUM_EPOCHS, cuda, triplet_train_epoch,
         triplet_test_epoch, 'triplet.txt', scheduler
     )
-    torch.save(model.state_dict(), '0027.pth')
+    torch.save(model.state_dict(), '0000.pth')
 
 
 def train_siamese(train_loader: DataLoader, test_loader: DataLoader, is_double: bool = False):
@@ -65,10 +65,10 @@ def train_siamese(train_loader: DataLoader, test_loader: DataLoader, is_double: 
     loss_fn.to(device)
 
     fit(
-        train_loader, test_loader, model, loss_fn, optimizer, 20, cuda, siamese_train_epoch, siamese_test_epoch,
+        train_loader, test_loader, model, loss_fn, optimizer, NUM_EPOCHS, cuda, siamese_train_epoch, siamese_test_epoch,
         'siamese.txt', scheduler
     )
-    torch.save(model.state_dict(), '0025.pth')
+    torch.save(model.state_dict(), '0000.pth')
 
 
 def train_classification(train_loader: DataLoader, test_loader: DataLoader, classes: List[str], is_double: bool = False):
@@ -84,7 +84,7 @@ def train_classification(train_loader: DataLoader, test_loader: DataLoader, clas
     # defining the loss function
     criterion = CrossEntropyLoss()
 
-    with open('0010.txt', 'w') as fout:
-        class_train(model, 40, optimizer, criterion, train_loader, device, fout)
-        torch.save(model.state_dict(), '0020.pth')
+    with open('classification.txt', 'w') as fout:
+        class_train(model, NUM_EPOCHS, optimizer, criterion, train_loader, device, fout)
+        torch.save(model.state_dict(), '0000.pth')
         class_test(model, classes, test_loader, device, fout)

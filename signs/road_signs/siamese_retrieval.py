@@ -1,6 +1,3 @@
-import cv2
-from torchvision import transforms
-
 from signs.road_signs.cnn.SiameseNet import SiameseNet
 from signs.road_signs.datasets_utils import *
 from signs.road_signs.loss.ConstrastiveLoss import ContrastiveLoss
@@ -35,8 +32,8 @@ def get_embedding_from_img(img1: torchvision.io.image, img2: torchvision.io.imag
 
 
 def get_embedding_from_img_path(img1: torchvision.io.image, img2: torchvision.io.image):
-    # # Unknown dataset
     if os.getenv('DATASET') == 'unknown':
+        # Unknown dataset
         img1 = ds['transform'](transforms.ToTensor()(cv2.imread(img1)[:, :, :3])).reshape([1, 3, 32, 32])
         img2 = ds['transform'](transforms.ToTensor()(cv2.imread(img2)[:, :, :3])).reshape([1, 3, 32, 32])
     else:
@@ -60,13 +57,11 @@ def retrieve_siamese_top_n_results(img: torchvision.io.image, max_results: int =
             retr_embedding1, retr_embedding2 = get_embedding_from_img_path(retrieval_images[i], retrieval_images[i + 1])
             losses = update_losses(
                 loss_fn(img_embedding, retr_embedding1, torch.tensor([1]).to(device)),
-                # losses, max_results, ds['get_image_from_path'](retrieval_images[i])
                 losses, max_results, retrieval_images[i]
             )
 
             losses = update_losses(
                 loss_fn(img_embedding, retr_embedding2, torch.tensor([1]).to(device)),
-                # losses, max_results, ds['get_image_from_path'](retrieval_images[i + 1])
                 losses, max_results, retrieval_images[i + 1]
             )
 

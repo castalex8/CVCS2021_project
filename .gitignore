@@ -135,9 +135,9 @@ signs/siamese_triplet
 signs/all_weights_backups
 pedestrian/annotations
 pedestrian/weights
-signs/retrieval_images/siamese/*
-signs/retrieval_images/triplet/*
-signs/retrieval_embedding/*
+signs/retrieval_images/
+signs/retrieval_image_embeddings/triplet/
+signs/retrieval_image_embeddings/siamese/
 signs/test/sample_images
 street_view/output
 

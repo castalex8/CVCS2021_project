@@ -15,11 +15,12 @@ NUMBER_PICTURES = 20
 RETRIEVAL_IMAGES_DIR = os.getenv('RETRIEVAL_IMAGES_DIR')
 RETRIEVAL_EMBEDDING_DIR = os.getenv('RETRIEVAL_EMBEDDING_DIR')
 UNKNOWN_PATH = os.getenv('UNKNOWN_BASE_DIR')
+DATASET = os.getenv('DATASET')
 
 
 def exists_or_create():
     for p_folder in ['siamese', 'triplet']:
-        folder = os.path.join(RETRIEVAL_EMBEDDING_DIR, p_folder, 'unknown')
+        folder = os.path.join(RETRIEVAL_EMBEDDING_DIR, p_folder, DATASET)
         if not pathlib.Path(folder).exists():
             os.mkdir(folder)
 
@@ -32,11 +33,11 @@ def create_unknown_ds():
 
     for img_path in os.listdir(base_image_path):
         base_path = os.path.join(base_image_path, img_path)
-        img = get_formatted_image(transforms.ToTensor()(cv2.imread(base_path)), dataset='unknown')
+        img = get_formatted_image(transforms.ToTensor()(cv2.imread(base_path)), dataset=DATASET)
         embedding, _ = get_siamese_embedding(img, img)
-        torch.save(embedding, os.path.join(RETRIEVAL_EMBEDDING_DIR, 'siamese', 'german', os.path.basename(base_path)[:-3] + 'pt'))
+        torch.save(embedding, os.path.join(RETRIEVAL_EMBEDDING_DIR, 'siamese', DATASET, os.path.basename(base_path)[:-3] + 'pt'))
         embedding, _, _ = get_triplet_embedding(img, img, img)
-        torch.save(embedding, os.path.join(RETRIEVAL_EMBEDDING_DIR, 'triplet', 'german', os.path.basename(base_path)[:-3] + 'pt'))
+        torch.save(embedding, os.path.join(RETRIEVAL_EMBEDDING_DIR, 'triplet', DATASET, os.path.basename(base_path)[:-3] + 'pt'))
 
     print('done!')
 
