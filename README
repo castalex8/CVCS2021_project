@@ -2,7 +2,31 @@
 Understanding the environment is crucial in many applications, especially when dealing with car driving safety. 
 Our project aims to create a system that can help autonomous car drivers in the detection of pedestrians, signs, and crosswalks to avoid collisions.
 
+
 ## pedestrian
+This is the module that take care of the pedestrian detection task.
+It is structured into a notebook and an inference file.
+The notebook is designed to be executed sequentially and here are the following step in order to obtain a file with the network weights:
+1. If not, copy the dataset files into the same notebook's folder, for each dataset you want to use
+2. Define the dataset class
+3. Instantiate the dataloaders
+4. Model setup for training
+    - define backbone
+    - define the head of the model (we use a simple network with only one layer)
+    - set the number of trainable backbone layers: the number of layers frozen during training (default set to 5 - which is also the maximum)
+    - define the optizer and set the parameters
+    - define (optionally) the learing rate scheduler, whose task is to simply decrease by a certain factor the learning rate value every N epochs
+    - start training process
+5. Save the model
+6. Show model output (works only in Google Colab)
+
+If you don't need to train a model you can use the inference file, which is used for plotting detection, same as the last point in the previous pipeline.
+What you need is the test dataset (we define classes for COCO and PennFudan dataset, if you use a different dataset you must define a new dataset class)
+and the model, which must be a .pth file.
+You will get in output the images with the eventual bounding box that locate the pedestrians in the image.
+For further information check the [PyTorch documentation](https://pytorch.org/tutorials/beginner/saving_loading_models.html) related to the 
+loading procedure from a checkpoint.
+
 
 ## signs
 This module implements the crosswalk sign detection, retrieval and classification.
