@@ -2,8 +2,9 @@
 Understanding the environment is crucial in many applications, especially when dealing with car driving safety. 
 Our project aims to create a system that can help autonomous car drivers in the detection of pedestrians, signs, and crosswalks to avoid collisions.
 
+Usage instructions below, but we first highly recommend to **read** the scientific-academic-paper-style document that describe the project.
 
-## pedestrian
+## Pedestrians
 This is the module that take care of the pedestrian detection task.
 It is structured into a notebook and an inference file.
 The notebook is designed to be executed sequentially and here are the following step in order to obtain a file with the network weights:
@@ -28,10 +29,10 @@ For further information check the [PyTorch documentation](https://pytorch.org/tu
 loading procedure from a checkpoint.
 
 
-## signs
+## Signs
 This module implements the crosswalk sign detection, retrieval and classification.
 
-### datasets
+### Datasets
 
 This project use the following datasets. They are required to run properly the project.
 - [Mapillary Dataset](https://www.mapillary.com/dataset/trafficsign)
@@ -128,5 +129,43 @@ The script will create the embeddings online, and it will take minutes to finish
 
 For any issues, report to **Matteo Corradini ([204329@studenti.unimore.it](mailto:204329@studenti.unimore.it))**.
 
-## crosswalks
+## Crosswalks
 
+This module implements the crosswalks detection. For any doubt mail to [Alessandro Castellucci](mailto:228058@studenti.unimore.it).
+
+### Dataset
+
+The script `crosswalks/code/dataset.py` is used for extracting 600 images each for 05, 06, 26, and 35 subfolders videos of the
+[DR(eye)VE dataset](https://aimagelab.ing.unimore.it/imagelab/page.asp?IdPage=8). For each 
+subdataset only 480 frames are preserved for the detection task. Already extracted images with ground truth
+(annotated by hand) is available [here](https://drive.google.com/file/d/1BzCKoo5XEhBw5tsFgOU-Bku2Ely7YKdi/view?usp=sharing).
+The script takes three arguments:
+- `--numVideo` for specify the video (or subfolder) number of the video you want to use for the images extraction
+  (e.g. `--numVideo 05`).
+- `--pathIn` for specify the first part of the absolute path where the original `DREYEVE_DATA` folder of the entire dataset is present, e.g. `--pathIn D:\Utenti\user\Desktop`, in this example
+in the `Desktop` folder the original `DREYEVE_DATA` folder of the entire dataset is present.
+- `--pathOut` for specify the output absolute path to store the images. **N.B.** So that all works fine you have to
+use the project path, e.g. `--pathOut D:\Utenti\user\Desktop\CVCS2021_project\crosswalks\dataset\dreyeve\06` if you are extracting the video 06.
+
+This procedure extracts 600 unlabeled images from the selected video. You can neglect this part if you download the already extracted 
+labeled images [here](https://drive.google.com/file/d/1BzCKoo5XEhBw5tsFgOU-Bku2Ely7YKdi/view?usp=sharing). Take care to store the `dataset`
+folder in the right project path, overwriting the already present one, that is only for some representative analysis.
+
+### crosswalks/code/crosswalks_analysis.py
+
+It performs the detection task. Can be executed in two ways:
+- no argument passed, it executes the detection on only one image, specified in the program variables `FOLDER` and `FILENAME`. 
+The image has to be already in the right path (as described in the above section). At the end will be printed the detection outcome and
+if a crosswalk is detected an output image will be stored in the subfolder `found`. E.g.
+```
+FOLDER='05'
+FILENAME='05_320.png'
+```
+- `--numFolder` argument specified. All images of the subdataset specified are analyzed, at the end evaluation results
+are printed, a file containing predictions is generated and successful detections are stored always in the `found` subfolder. E.g. `--numFolder 26`.
+
+### crosswalks/code/evaluation.py
+
+The script prints the evaluation results analyzing the ground truth and predictions text files of the specified `--numFolder` subdataset.
+Measures: True Positives, False Positives, True Negatives, False Negatives, Precision, Recall, True Positive Rate,
+True Negative Rate, Accuracy, G-Mean, F-Measure. E.g. `--numFolder 26`.

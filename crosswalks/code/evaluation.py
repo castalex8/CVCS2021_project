@@ -71,7 +71,7 @@ if __name__ == '__main__':
     args = a.parse_args()
     if args.numFolder is None:
         print('No numFolder')
-    elif int(args.numFolder) in (5, 6, 26, 35):
-        evaluation(args.numFolder)
-    else:
+    elif int(args.numFolder) not in (5, 6, 26, 35):
         print('Error')
+    else:
+        evaluation(args.numFolder)
