@@ -83,13 +83,13 @@ def retrieve_siamese_top_n_results_from_embedding(img: torchvision.io.image, max
     for f1, f2 in list(zip(files, files[1:]))[::2]:
         losses = update_losses(
             loss_fn(img_embedding, torch.load(os.path.join(get_embedding_path(), f1)), torch.tensor([1]).to(device)),
-            losses, max_results, ds['get_image_from_path'](f1[:-2])
+            losses, max_results, ds['get_label_from_retr_path'](f1)
         )
 
         if f2 != '':
             losses = update_losses(
                 loss_fn(img_embedding, torch.load(os.path.join(get_embedding_path(), f2)), torch.tensor([1]).to(device)),
-                losses, max_results, ds['get_image_from_path'](f2[:-2])
+                losses, max_results, ds['get_label_from_retr_path'](f2)
             )
 
     return sorted(losses, key=lambda x: x[0])

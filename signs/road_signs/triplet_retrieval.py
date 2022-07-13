@@ -108,19 +108,19 @@ def retrieve_triplet_top_n_results_from_embedding(img: torchvision.io.image, max
 
         losses = update_losses(
             loss_fn(img_embedding, torch.load(os.path.join(embedding_base_dir, f1))),
-            losses, max_results, ds['get_image_from_path'](f1[:-2])
+            losses, max_results, ds['get_label_from_retr_path'](f1[:-2])
         )
 
         if f2 != '':
             losses = update_losses(
                 loss_fn(img_embedding, torch.load(os.path.join(embedding_base_dir, f2))),
-                losses, max_results, ds['get_image_from_path'](f2[:-2])
+                losses, max_results, ds['get_label_from_retr_path'](f2[:-2])
             )
 
         if f3 != '':
             losses = update_losses(
                 loss_fn(img_embedding, torch.load(os.path.join(embedding_base_dir, f3))),
-                losses, max_results, ds['get_image_from_path'](f3[:-2])
+                losses, max_results, ds['get_label_from_retr_path'](f3[:-2])
             )
 
     return sorted(losses, key=lambda x: x[0])

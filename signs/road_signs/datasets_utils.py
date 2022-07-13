@@ -34,6 +34,7 @@ datasets = {
             img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
             if retr_img.split('___')[-1] in img['path']
         ][0],
+        'get_label_from_retr_path': lambda x: x.split('---')[0],
         'get_crosswalk_label': lambda: 'information--pedestrians-crossing--g1'
     },
     'german': {
@@ -50,6 +51,7 @@ datasets = {
             img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
             if retr_img.split('__')[-1] in img[-1]
         ][0],
+        'get_label_from_retr_path': lambda x: GERMAN_CLASSES[int(x.split('_')[0])],
         'get_crosswalk_label': lambda: 'Pedestrians'
     },
     'unknown': {
@@ -66,6 +68,7 @@ datasets = {
             img for img in datasets[DATASET]['get_images'](datasets[DATASET]['dataset'])
             if retr_img.split('__')[-1] in img['path']
         ][0],
+        'get_label_from_retr_path': lambda x: x.split('-')[0],
         'get_crosswalk_label': lambda: 'crosswalk'
     }
 }

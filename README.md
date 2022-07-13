@@ -129,6 +129,24 @@ The script will create the embeddings online, and it will take minutes to finish
 
 For any issues, report to **Matteo Corradini ([204329@studenti.unimore.it](mailto:204329@studenti.unimore.it))**.
 
+### Utility functions
+Inside the files `signs/road_signs/siamese_retrieval.py` and `signs/road_signs/siamese_retrieval.py`
+there are the utility functions that get the top N labels given an image as parameter.
+
+The same utility function dedicated to the classification can be found inside the file `classification.py`.
+
+The script `signs/road_signs/get_img_road_sign.py` is it possible to find some usage examples of these functions.
+
+In order to use these functions you need to set the following environment variables.
+> DATASET=mapillary
+> GERMAN_BASE_DIR=/home/corra/Desktop/gtsrb-german-traffic-sign
+> MAPILLARY_BASE_DIR=/home/corra/Desktop/Mapillary
+> RETRIEVAL_EMBEDDING_DIR=/home/corra/CVCS2021_project/signs/road_signs/retrieval_image_embeddings
+> RETRIEVAL_IMAGES_DIR=/home/corra/CVCS2021_project/signs/road_signs/retrieval_images
+> UNKNOWN_BASE_DIR=/home/corra/Desktop/Unknown
+> WEIGHTS_DIR=/home/corra/CVCS2021_project/signs/road_signs/weights
+
+
 ## Crosswalks
 
 This module implements the crosswalks detection. For any doubt mail to [Alessandro Castellucci](mailto:228058@studenti.unimore.it).

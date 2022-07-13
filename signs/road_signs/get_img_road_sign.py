@@ -19,15 +19,13 @@ def main():
 
     img = torchvision.io.read_image(args.file)
 
-    print('Siamese results')
-    for res in retrieve_siamese_top_n_results_from_embedding(img):
-        print(res[1])
+    print('Siamese results:', end=' ')
+    print(', '.join([res[1] for res in retrieve_siamese_top_n_results_from_embedding(img)]))
 
-    print('Triplet results')
-    for res in retrieve_triplet_top_n_results_from_embedding(img):
-        print(res[1])
+    print('Triplet results:', end=' ')
+    print(', '.join([res[1] for res in retrieve_triplet_top_n_results_from_embedding(img)]))
 
-    print(predict_class_label(img))
+    print('Predicted class: ', predict_class_label(img))
 
 
 if __name__ == '__main__':
