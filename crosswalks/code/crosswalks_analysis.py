@@ -8,8 +8,8 @@ import evaluation as ev
 import os
 from matplotlib import pyplot as plt
 
-FOLDER = '35'
-FILENAME = '35_041.png'
+FOLDER = '05'
+FILENAME = '05_320.png'
 
 
 # White Balancing of an image (gray world assumption)
@@ -26,12 +26,10 @@ def white_balance(img):
 # Function for computing Bird's Eye View
 def bird_eye(img, numFolder=FOLDER):
     # clockwise order starting from top-left point
-    if int(numFolder) in (5, 22, 26):
+    if int(numFolder) in (5, 26):
         src = np.array([[890, 471], [1030, 471], [1919, 1079], [0, 1079]], dtype='float32')
     elif int(numFolder) == 6:
         src = np.array([[911, 562], [1009, 562], [1919, 1079], [0, 1079]], dtype='float32')
-    elif int(numFolder) == 23:
-        src = np.array([[890, 585], [1030, 585], [1919, 1079], [0, 1079]], dtype='float32')
     elif int(numFolder) == 35:
         src = np.array([[853, 600], [964, 600], [1919, 1079], [0, 1079]], dtype='float32')
     else:
@@ -348,7 +346,7 @@ def crosswalks_analysis(im):
 
 def main():
     a = argparse.ArgumentParser()
-    a.add_argument("--numFolder", help="number of folder: 01, 02, ..., 74", required=False)
+    a.add_argument("--numFolder", help="number of folder: 05, 06, 26, or 35", required=False)
     args = a.parse_args()
     if args.numFolder is None:
         print('Analyzing \'{}\''.format(FILENAME))

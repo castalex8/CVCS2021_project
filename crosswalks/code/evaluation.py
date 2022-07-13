@@ -3,6 +3,7 @@ import numpy as np
 import argparse
 from math import sqrt
 
+
 def evaluation(numFolder):
     gt = np.zeros((480,), dtype=np.int8)
     pred = np.zeros((480,), dtype=np.int8)
@@ -63,13 +64,14 @@ def evaluation(numFolder):
     print('G-mean = {:0.2f}'.format(gmean) + '\tF1 = ' + str(f1))
     print('Accuracy = ' + str(accuracy))
 
+
 if __name__ == '__main__':
     a = argparse.ArgumentParser()
-    a.add_argument("--numFolder", help="number of folder: 01, 02, ..., 74")
+    a.add_argument("--numFolder", help="number of folder: 05, 06, 26, or 35")
     args = a.parse_args()
     if args.numFolder is None:
         print('No numFolder')
-    elif 1 <= int(args.numFolder) <= 74:
+    elif int(args.numFolder) in (5, 6, 26, 35):
         evaluation(args.numFolder)
     else:
         print('Error')
