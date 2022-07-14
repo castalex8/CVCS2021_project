@@ -28,6 +28,7 @@ You will get in output the images with the eventual bounding box that locate the
 For further information check the [PyTorch documentation](https://pytorch.org/tutorials/beginner/saving_loading_models.html) related to the 
 loading procedure from a checkpoint.
 
+In case of errors, contact **Alessandro Lugari ([243111@studenti.unimore.it](mailto:243111@studenti.unimore.it))**.
 
 ## Signs
 This module implements the crosswalk sign detection, retrieval and classification.
