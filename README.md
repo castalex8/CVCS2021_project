@@ -150,7 +150,7 @@ In order to use these functions you need to set the following environment variab
 
 ## Crosswalks
 
-This module implements the crosswalks detection. For any doubt mail to [Alessandro Castellucci](mailto:228058@studenti.unimore.it).
+This module implements the crosswalks detection. For any doubt mail to **Alessandro Castellucci** (**[228058@studenti.unimore.it](mailto:228058@studenti.unimore.it)**).
 
 ### Dataset
 
