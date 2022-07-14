@@ -28,6 +28,15 @@ You will get in output the images with the eventual bounding box that locate the
 For further information check the [PyTorch documentation](https://pytorch.org/tutorials/beginner/saving_loading_models.html) related to the 
 loading procedure from a checkpoint.
 
+The remaining files:
+- coco_utils.py
+- coco_eval.py
+- engine.py
+- utils.py
+- transforms.py
+
+are utility files borrowed from [torchvision repo](https://github.com/pytorch/vision/tree/59ec1dfd550652a493cb99d5704dcddae832a204/references/detection), used only for the evaluation of models.
+
 In case of errors, contact **Alessandro Lugari ([243111@studenti.unimore.it](mailto:243111@studenti.unimore.it))**.
 
 ## Signs
