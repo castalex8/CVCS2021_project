@@ -2,7 +2,7 @@
 Understanding the environment is crucial in many applications, especially when dealing with car driving safety. 
 Our project aims to create a system that can help autonomous car drivers in the detection of pedestrians, signs, and crosswalks to avoid collisions.
 
-Usage instructions below, but we first highly recommend to **read** the scientific-academic-paper-style document that describe the project.
+Usage instructions below, but we first highly recommend to **read** the scientific-academic-paper-style document that describes the project.
 
 ## Pedestrians
 This is the module that take care of the pedestrian detection task.
