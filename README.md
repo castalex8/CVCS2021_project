@@ -1,6 +1,6 @@
 # Pedestrians, Signs, Crosswalks Detection System
 Understanding the environment is crucial in many applications, especially when dealing with car driving safety. 
-Our project aims to create a system that can help autonomous car drivers in the detection of pedestrians, signs, and crosswalks to avoid collisions.
+Our project aims to create a system that can help autonomous cars or drivers in the detection of pedestrians, signs, and crosswalks to avoid collisions.
 
 Usage instructions below, but we first highly recommend to **read** the scientific-academic-paper-style document that describes the project.
 
