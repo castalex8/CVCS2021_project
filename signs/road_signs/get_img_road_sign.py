@@ -25,7 +25,7 @@ def main():
     print('Triplet results:', end=' ')
     print(', '.join([res[1] for res in retrieve_triplet_top_n_results_from_embedding(img)]))
 
-    print('Predicted class: ', predict_class_label(img))
+    print('Predicted class:', predict_class_label(img))
 
 
 if __name__ == '__main__':

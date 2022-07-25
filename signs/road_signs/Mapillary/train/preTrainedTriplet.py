@@ -11,8 +11,7 @@ from signs.road_signs.Mapillary.dataset.MapillaryDatasetTriplet import Mapillary
 from signs.road_signs.cnn.RoadSignNetFC import get_road_sign_fc
 from signs.road_signs.train.Triplet import train_epoch, test_epoch
 from signs.road_signs.utils.train import fit
-from signs.road_signs.utils.Const import BS, MARGIN, INIT_LR, STEP_SIZE, GAMMA, NUM_EPOCHS
-
+from signs.road_signs.utils.Const import BS, MARGIN, INIT_LR, STEP_SIZE, GAMMA, NUM_EPOCHS, MOMENTUM
 
 if __name__ == '__main__':
     cuda = torch.cuda.is_available()
